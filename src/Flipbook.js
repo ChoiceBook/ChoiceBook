@@ -1,5 +1,5 @@
-// src/Flipbook.js
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 import './Flipbook.css'; // Import the stylesheet
 
@@ -23,37 +23,24 @@ const Flipbook = () => {
 
   return (
     <div className="flipbook-wrapper">
-      {/* Sidebar */}
+      <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
+        ☰
+      </button>
+
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-content">
           <span className="sidebar-close-btn" onClick={toggleSidebar}>
             &times;
           </span>
-          <h2>Login</h2>
-          <form>
-            <div>
-              <label htmlFor="username">Username:</label>
-              <input type="text" id="username" name="username" />
-            </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <input type="password" id="password" name="password" />
-            </div>
-            <button type="submit">Login</button>
-          </form>
+          <Link to="/create-test" className="create-test-btn">Create Test</Link>
         </div>
       </div>
-
-      {/* Toggle button for sidebar */}
-      <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
-        {isSidebarOpen ? 'Close Sidebar' : 'Open Sidebar'}
-      </button>
 
       {/* Flipbook container */}
       <div className="flipbook-container">
         <HTMLFlipBook
-          width={600} // Adjust width as needed
-          height={600} // Adjust height as needed
+          width={700} // Adjust width as needed
+          height={800} // Adjust height as needed
           size="stretch"
           minWidth={315}
           maxWidth={700}

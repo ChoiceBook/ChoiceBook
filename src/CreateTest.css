@@ -1,0 +1,79 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+  }
+
+.create-test-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    height: 100%; /* Full height */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  textarea,
+  input[type="file"],
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .checkbox-group > div {
+    margin: 5px;
+    text-align: center;
+  }
+  
+  .image-upload-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  button[type="submit"], .image-upload-group button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"]:hover, .image-upload-group button:hover {
+    background-color: #218838;
+  }
+  
