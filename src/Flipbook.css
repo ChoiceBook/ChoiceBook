@@ -1,5 +1,3 @@
-/* src/Flipbook.css */
-
 html, body {
   margin: 0;
   padding: 0;
@@ -23,8 +21,8 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%); /* Center the flipbook */
   width: 80vw; /* Adjust as needed */
-  height: 80vh; /* Adjust as needed */
-  margin: auto; /* Center the flipbook horizontally and vertically */
+  height: 90vh; /* Adjust as needed */
+  /*margin: auto;*/ /* Center the flipbook horizontally and vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,6 +43,7 @@ html, body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
+  box-sizing: border-box; /* Ensure padding does not affect width and height */
 }
 
 .page-link {
@@ -73,7 +72,6 @@ html, body {
   }
 }
 
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -94,6 +92,10 @@ html, body {
 
 .sidebar-content {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start; /* Align content to the top */
 }
 
 .sidebar-close-btn {
@@ -106,18 +108,38 @@ html, body {
 
 .toggle-sidebar-btn {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
+  top: 10px;
+  left: 10px;
+  font-size: 24px; /* Larger font size for better visibility */
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 10px;
+  padding: 5px 10px; /* Adjust padding */
   cursor: pointer;
   z-index: 1000;
+  width: auto; /* Ensure the button width does not expand */
+  height: auto; /* Ensure the button height does not expand */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .toggle-sidebar-btn:hover {
   background-color: #0056b3;
+}
+
+.create-test-btn {
+  margin-top: 20px; /* Margin from the top of the sidebar */
+  padding: 10px;
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.create-test-btn:hover {
+  background-color: #218838; /* Darker green on hover */
 }
