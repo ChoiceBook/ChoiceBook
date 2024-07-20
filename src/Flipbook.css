@@ -1,3 +1,4 @@
+/* Flipbook.css */
 html, body {
   margin: 0;
   padding: 0;
@@ -22,11 +23,11 @@ html, body {
   transform: translate(-50%, -50%); /* Center the flipbook */
   width: 80vw; /* Adjust as needed */
   height: 90vh; /* Adjust as needed */
-  /*margin: auto;*/ /* Center the flipbook horizontally and vertically */
   display: flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1; /* Maintain a 1:1 aspect ratio */
+  z-index: 1;
 }
 
 .flipbook-page {
@@ -44,6 +45,7 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   box-sizing: border-box; /* Ensure padding does not affect width and height */
+  z-index: 1;
 }
 
 .page-link {
@@ -51,6 +53,47 @@ html, body {
   margin-top: 20px;
   color: blue;
   text-decoration: underline;
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-input {
+  padding: 10px;
+  margin: 10px 0;
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.text-box {
+  margin: 10px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.text-box:hover {
+  background-color: #f0f0f0;
 }
 
 /* Responsive adjustments */
@@ -81,13 +124,15 @@ html, body {
   background-color: #333;
   color: white;
   overflow-x: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.5s ease;
   transform: translateX(-100%); /* Initially hidden */
+  opacity: 0; /* Initially hidden */
   z-index: 1000;
 }
 
 .sidebar.open {
   transform: translateX(0); /* Show the sidebar */
+  opacity: 1; /* Show the sidebar */
 }
 
 .sidebar-content {
@@ -96,6 +141,7 @@ html, body {
   flex-direction: column;
   height: 100%;
   justify-content: flex-start; /* Align content to the top */
+  position: relative; /* Allows positioning of child elements */
 }
 
 .sidebar-close-btn {
@@ -142,4 +188,95 @@ html, body {
 
 .create-test-btn:hover {
   background-color: #218838; /* Darker green on hover */
+}
+
+.logout-btn {
+  padding: 10px;
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  position: absolute; /* Position at the bottom */
+  bottom: 20px; /* Adjust as needed */
+  width: calc(100% - 40px); /* Ensure it fits within the padding */
+}
+
+.logout-btn:hover {
+  background-color: #e53935; /* Darker red on hover */
+}
+
+/* Navigation Bar styles */
+.nav-bar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  opacity: 0; /* Hidden initially */
+  transition: opacity 0.5s ease;
+}
+
+.nav-bar.fade-in {
+  opacity: 1; /* Fade-in effect when logged in */
+}
+
+.nav-button {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100px; /* Adjust width as needed */
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+/* Lock icon styles */
+.lock-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  color: #007bff;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.lock-icon.hidden {
+  opacity: 0;
+  pointer-events: none; /* Prevent clicks when hidden */
+}
+
+.lock-icon.unlocked {
+  color: #28a745; /* Green color for unlocked state */
+}
+
+.lock-icon.hidden {
+  opacity: 0;
+  pointer-events: none; /* Prevent clicks when hidden */
+}
+
+.flipbook-container.locked {
+  pointer-events: none; /* Disable interactions */
+}
+
+.login-message {
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
 }
