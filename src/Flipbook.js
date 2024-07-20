@@ -3,31 +3,86 @@ import { Link } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 import './Flipbook.css'; // Import the stylesheet
 
-const Page = React.forwardRef((props, ref) => {
+import Login from './Login'; // Import the Login component
+
+const SearchPage = React.forwardRef((props, ref) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log(`Searching for: ${searchQuery}`);
+  };
+
   return (
     <div className="flipbook-page" ref={ref} data-density={props.soft ? "soft" : "hard"}>
-      <h2>Page {props.number}</h2>
-      <p>{props.children}</p>
-      <a href={`#page${props.number % 4 + 1}`} className="page-link">Go to Page {props.number % 4 + 1}</a>
+      <h2>Chapter {props.chapter}</h2>
+      <form onSubmit={handleSearch} className="search-form">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search..."
+          className="search-input"
+        />
+        <button type="submit" className="search-button">Search</button>
+      </form>
+    </div>
+  );
+});
+
+const TextPage = React.forwardRef((props, ref) => {
+  return (
+    <div className="flipbook-page" ref={ref} data-density={props.soft ? "soft" : "hard"}>
+      <div className="text-box" onClick={(e) => { e.stopPropagation(); alert(`Clicked on text box 1 of page ${props.number}`); }}>Text Box 1</div>
+      <div className="text-box" onClick={(e) => { e.stopPropagation(); alert(`Clicked on text box 2 of page ${props.number}`); }}>Text Box 2</div>
+      <div className="text-box" onClick={(e) => { e.stopPropagation(); alert(`Clicked on text box 3 of page ${props.number}`); }}>Text Box 3</div>
     </div>
   );
 });
 
 const Flipbook = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const flipbookRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const generatePages = () => {
+    const pages = [];
+    for (let chapter = 1; chapter <= 8; chapter++) {
+      pages.push(<SearchPage key={`chapter-${chapter}-search`} chapter={chapter} soft={true} />);
+      for (let i = 1; i <= 3; i++) {
+        pages.push(<TextPage key={`chapter-${chapter}-page-${i}`} number={`Chapter ${chapter} - Page ${i}`} soft={true} />);
+      }
+    }
+    return pages;
+  };
+
+  const handleChapterNavigation = (chapterIndex) => {
+    if (flipbookRef.current) {
+      const pageIndex = chapterIndex * 4 - 1;
+      flipbookRef.current.pageFlip().turnToPage(pageIndex);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <div className="flipbook-wrapper">
-      <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
-        ☰
-      </button>
-
-      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+      {!isLoggedIn && (
+        <div className="lock-container">
+          <div className="lock-icon" onClick={() => document.querySelector('.login-overlay').style.display = 'block'}>
+            🔒
+          </div>
+          <Login onSuccess={handleLoginSuccess} />
+        </div>
+      )}
+      
+      <div className={`sidebar ${isSidebarOpen && isLoggedIn ? 'open' : ''}`}>
         <div className="sidebar-content">
           <span className="sidebar-close-btn" onClick={toggleSidebar}>
             &times;
@@ -36,39 +91,46 @@ const Flipbook = () => {
         </div>
       </div>
 
-      {/* Flipbook container */}
-      <div className="flipbook-container">
-        <HTMLFlipBook
-          width={700} // Adjust width as needed
-          height={800} // Adjust height as needed
-          size="stretch"
-          minWidth={315}
-          maxWidth={700}
-          minHeight={420}
-          maxHeight={1350}
-          drawShadow={true}
-          flippingTime={700} // Adjust flipping time for softer effect
-          usePortrait={true}
-          startZIndex={0}
-          autoSize={true}
-          maxShadowOpacity={0.5}
-          showCover={true}
-          mobileScrollSupport={true}
-          swipeDistance={30}
-          clickEventForward={true}
-          useMouseEvents={true}
-          renderOnlyPageLengthChange={false}
-          ref={flipbookRef}
-        >
-          <Page number={1} soft={true}>This is the content of Page 1.</Page>
-          <Page number={2} soft={true}>This is the content of Page 2.</Page>
-          <Page number={3} soft={true}>This is the content of Page 3.</Page>
-          <Page number={4} soft={true}>This is the content of Page 4.</Page>
-          <Page number={5} soft={true}>This is the content of Page 5.</Page>
-          <Page number={6} soft={true}>This is the content of Page 6.</Page>
-          <Page number={7} soft={true}>This is the content of Page 7.</Page>
-          <Page number={8} soft={true}>This is the content of Page 8.</Page>
-        </HTMLFlipBook>
+      <div className={`flipbook-with-nav ${isLoggedIn ? 'fade-in' : ''}`}>
+        <div className="flipbook-container">
+          <HTMLFlipBook
+            width={700}
+            height={800}
+            size="stretch"
+            minWidth={315}
+            maxWidth={700}
+            minHeight={420}
+            maxHeight={1350}
+            drawShadow={true}
+            flippingTime={700}
+            usePortrait={true}
+            startZIndex={0}
+            autoSize={true}
+            maxShadowOpacity={0.5}
+            showCover={true}
+            mobileScrollSupport={true}
+            swipeDistance={30}
+            clickEventForward={false}
+            useMouseEvents={true}
+            renderOnlyPageLengthChange={false}
+            ref={flipbookRef}
+          >
+            {generatePages()}
+          </HTMLFlipBook>
+        </div>
+
+        {/* Navigation Bar */}
+        <div className={`nav-bar ${isLoggedIn ? 'fade-in' : ''}`}>
+          {[...Array(8).keys()].map((index) => (
+            <button
+              key={index}
+              className="nav-button"
+              onClick={() => handleChapterNavigation(index + 1)}
+            >
+              Chapter {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
