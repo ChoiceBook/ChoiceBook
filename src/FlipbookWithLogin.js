@@ -189,6 +189,13 @@ const FlipbookWithLogin = () => {
   ))}
 </div>
 
+{/* Logout Button */}
+{isLoggedIn && (
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      )}
+
     </div>
   );
 };
