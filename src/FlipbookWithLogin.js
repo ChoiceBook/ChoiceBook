@@ -19,7 +19,7 @@ const FlipbookWithLogin = () => {
   }, []);
 
   const handleLockClick = () => {
-    setIsLoginVisible(true);
+    setIsLoginVisible(!isLoginVisible);
   };
 
   const handleLogin = (e) => {
@@ -95,24 +95,24 @@ const FlipbookWithLogin = () => {
     navigate('/search');
   };
 
-  const handleStudentCardClick = () => {
-    navigate('/student-card'); // Update this to the correct route
+  const handlePostCardClick = () => {
+    navigate('/post-card'); // Update this to the correct route
   };
 
   const handlePenClick = () => {
     navigate('/create-test'); // Update this to the correct route
   };
 
-  const handleClockClick = () => {
+  /*const handleClockClick = () => {
     navigate('/clock'); // Update this to the correct route
-  };
+  };*/
 
   return (
     <div className="flipbook-wrapper">
-      {/* Login popup */}
-      {isLoginVisible && (
-        <div className="login-overlay active">
-          <div className="login-popup">
+      {/* Login form next to flipbook */}
+      <div className="login-section">
+        {!isLoggedIn && isLoginVisible && (
+          <div className="login-form">
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
               <input type="email" placeholder="Email" required />
@@ -120,18 +120,17 @@ const FlipbookWithLogin = () => {
               <button type="submit">Login</button>
             </form>
           </div>
-        </div>
-      )}
-
-      {/* Lock icon */}
-      <div className={`flipbook-lock-container`} onClick={(e) => e.stopPropagation()}>
-        {!isLockHidden && (
-          <div className="lock-icon" onClick={handleLockClick}>
-            🔒
-          </div>
         )}
+      </div>
 
-        <div className={`flipbook-container ${isLoggedIn ? '' : 'locked'}`}>
+      <div className={`flipbook-container ${!isLoggedIn ? 'locked' : ''}`}>
+        <div className="flipbook-lock-container">
+          {!isLockHidden && (
+            <div className={`lock-icon ${isLoggedIn ? 'unlocked' : ''}`} onClick={handleLockClick}>
+              {isLoggedIn ? '🔓' : '🔒'}
+            </div>
+          )}
+        </div>
           <HTMLFlipBook
             width={700}
             height={800}
@@ -153,17 +152,17 @@ const FlipbookWithLogin = () => {
             useMouseEvents={true}
             renderOnlyPageLengthChange={false}
             ref={flipbookRef}
-            disableFlip={true}
+            disableFlip={!isLoggedIn}
           >
             {generatePages()}
           </HTMLFlipBook>
         </div>
-      </div>
+
 
       {/* Navigation icons */}
-      <div className="navigation-icons">
-        <button className="nav-icon top-left" onClick={handleStudentCardClick}>
-          🏫 {/* Replace with the actual icon/image */}
+      <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
+        <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>
+        <img src="/postcard.png" alt="PostCard" />
         </button>
         <button className="nav-icon top-right search" onClick={handleSearchClick}>
           <img src="/glass.png" alt="Search" />
@@ -171,9 +170,9 @@ const FlipbookWithLogin = () => {
         <button className="nav-icon bottom-left pen" onClick={handlePenClick} style={{ width: '100px', height: '100px' }}>
         <img src="/pen3.png" alt="Pen" />
         </button>
-        <button className="nav-icon bottom-right clock" onClick={handleClockClick}>
+        {/*<button className="nav-icon bottom-right clock" onClick={handleClockClick}>
         <img src="/clock.png" alt="Clock" />
-        </button>
+        </button>*/}
       </div>
 
       {/* Navigation bar */}
