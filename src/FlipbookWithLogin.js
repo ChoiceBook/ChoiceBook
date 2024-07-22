@@ -32,20 +32,47 @@ const FlipbookWithLogin = () => {
     if (flipbookRef.current) {
       flipbookRef.current.pageFlip().turnToPage(0);
     }
-    setTimeout(() => {
-      setIsLoggedIn(false);
-      setIsLockHidden(false);
-      localStorage.setItem('isLoggedIn', 'false');
-    }, 700);
+    const logoutButton = document.querySelector('.logout-button');
+    const lockIcon = document.querySelector('.lock-icon');
+      if (logoutButton) {
+        logoutButton.classList.add('fade-out');
+      }
+      if (lockIcon) {
+        lockIcon.classList.add('fade-in');
+      }
+      setTimeout(() => {
+        if (logoutButton) {
+          logoutButton.classList.remove('fade-out');
+        }
+        if (lockIcon) {
+          lockIcon.classList.remove('fade-in');
+        }
+        setIsLoggedIn(false);
+        setIsLockHidden(false);
+        localStorage.setItem('isLoggedIn', 'false');
+      }, 1000); // Match the duration of the CSS transition
   };
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setIsLoginVisible(false);
     localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태를 로컬 스토리지에 저장
-    setTimeout(() => {
-      setIsLockHidden(true);
-    }, 1500);
+
+    const lockIcon = document.querySelector('.lock-icon');
+    const logoutButton = document.querySelector('.logout-button');
+    if (lockIcon) {
+      lockIcon.classList.add('fade-out'); // Add fade-out class
+      if (logoutButton) {
+        logoutButton.classList.add('fade-in');
+      }
+      setTimeout(() => {
+        setIsLockHidden(true);
+        if (logoutButton) {
+          logoutButton.classList.add('fade-in');
+        }
+        lockIcon.classList.remove('fade-out'); // Clean up class after transition
+      }, 1000); // Match the duration of the CSS transition
+    }
   };
 
   const handleRegisterClick = () => {
@@ -129,7 +156,7 @@ const FlipbookWithLogin = () => {
       <div className={`flipbook-container ${!isLoggedIn ? 'locked' : ''}`}>
         <div className="flipbook-lock-container">
           {!isLockHidden && (
-            <div className={`lock-icon ${isLoggedIn ? 'unlocked' : ''}`} onClick={handleLockClick}>
+            <div className={`lock-icon ${isLoggedIn ? 'unlocked fade-out' : ''}`} onClick={handleLockClick}>
               {isLoggedIn ? '🔓' : '🔒'}
             </div>
           )}
@@ -189,7 +216,7 @@ const FlipbookWithLogin = () => {
       </div>
 
       {isLoggedIn && (
-        <button className="logout-button" onClick={handleLogout}>
+        <button className="logout-button fade-in" onClick={handleLogout}>
           Logout
         </button>
       )}
