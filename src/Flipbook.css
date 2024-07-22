@@ -275,6 +275,7 @@ html, body {
   width: auto; /* Ensure the width is automatically adjusted */
   height: auto; /* Ensure the height is automatically adjusted */
   box-sizing: border-box;
+  transition: opacity 1s ease-in-out;
 }
 
 .logout-button:hover {
@@ -328,8 +329,18 @@ html, body {
   z-index: 1005;
   color: #e2df83;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 1s ease, transform 1s ease;
   pointer-events: auto; /* Ensure the lock icon is clickable */
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in; /* Adjust the duration as needed */
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-out; /* Adjust the duration as needed */
 }
 
 .lock-icon.hidden {
@@ -410,6 +421,8 @@ html, body {
   background: none;
   border: none;
   display: inline-block;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-icon img {
