@@ -7,6 +7,18 @@ import './Login.css';
 import Login from './Login';
 import Register from './Register'; // Register 컴포넌트 추가
 import TextPage from './TextPage';
+import { fetchPlots, fetchRanks, fetchItemDetails } from './api'; // Import data fetching functions
+
+const categories = [
+  { id: 1, name: '드라마' },
+  { id: 2, name: '영화' },
+  { id: 3, name: '게임' },
+  { id: 4, name: '애니메이션' },
+  { id: 5, name: '음악' },
+  { id: 6, name: '음식' },
+  { id: 7, name: '스포츠' },
+  { id: 8, name: '기타' }
+];
 
 const FlipbookWithLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,6 +27,7 @@ const FlipbookWithLogin = () => {
   const [isRegistering, setIsRegistering] = useState(false); // 회원가입 상태 추가
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
+  const [pages, setPages] = useState([]);
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -22,6 +35,89 @@ const FlipbookWithLogin = () => {
     if (loggedIn) {
       setIsLockHidden(true);
     }
+
+    const loadData = async () => {
+      try {
+        const generatedPages = [];
+        // Add front cover
+        generatedPages.push(
+          <TextPage key="front-cover" isCoverPage={true} isFirstPage={true} title="Memorial Diary" />
+        );
+
+        for (const category of categories) {
+          const plots = await fetchPlots(category.id);
+
+          // Add a chapter page for the category
+          generatedPages.push(
+            <TextPage
+              key={`chapter-${category.id}`}
+              title={category.name}
+              content={<div />} // Add your content here
+              chapterPage={true} // Apply the chapter-page styles
+              isCoverPage={false} // Adjust these based on your requirements
+              isFirstPage={false}
+              isLastPage={false}
+            />
+          );
+          
+
+        // Fetch user ranks for each plot
+        const plotDataPromises = plots.map(async (plot) => {
+          const ranks = await fetchRanks(plot.plot_id, 1); // Assuming user ID is 1
+          
+          // Fetch item details based on ranks
+          const itemsPromises = ranks.map(async (rank) => {
+            const itemDetails = await fetchItemDetails(rank.item_id);
+            return { ...itemDetails[0], rank_value: rank.rank_value }; // Add rank to item details
+          });
+
+          const items = await Promise.all(itemsPromises);
+          return {
+            title: plot.title,
+            items: items.sort((a, b) => a.rank_value - b.rank_value), // Sort items by rank
+          };
+        });
+
+        const plotData = await Promise.all(plotDataPromises);
+
+        // Add plot pages
+        plotData.forEach((data, index) => {
+          generatedPages.push(
+            <TextPage
+              key={`plot-${index}`}
+              title={data.title}
+              content={
+                <div>
+                  {data.items.map(item => (
+                    <div key={item.item_id} className="item-row">
+                    <div className="item-info">
+                      <h2>{item.rank_value}.</h2>
+                      <p>{item.item_name}</p>
+                    </div>
+                    <div className="item-image-container">
+                      <img src={item.item_image_url} alt={item.item_name} className="item-image" /> {/* Display image */}
+                    </div>
+                  </div>
+                  ))}
+                </div>
+              }
+            />
+          );
+        });
+      }
+      
+        // Add back cover
+        generatedPages.push(
+          <TextPage key="back-cover" isCoverPage={true} isLastPage={true} />
+        );
+        
+        setPages(generatedPages);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    loadData();
   }, []);
 
   const handleLockClick = () => {
@@ -84,51 +180,7 @@ const FlipbookWithLogin = () => {
   };
 
   const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
-
-  const generatePages = () => {
-    const pages = [
-      <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" isFirstPage={true} plotId={null} categoryId={null} />
-    ];
-
-    for (let chapter = 0; chapter < chapterNames.length; chapter++) {
-      const categoryId = chapter + 1;
-
-      for (let i = 1; i <= 3; i++) {
-        pages.push(
-          <TextPage 
-            key={`chapter-${chapterNames[chapter]}-page-${i}`} 
-            number={`${chapterNames[chapter]} - Page ${i}`} 
-            soft={true}
-            isCoverPage={false}
-            chapter={chapterNames[chapter]}
-            plotId={1}
-            categoryId={categoryId}
-          />
-        );
-      }
-    }
-
-    pages.push(
-      <TextPage
-        key="final-page"
-        isCoverPage={true}
-        title="나의 취향을 담는 곳, Memorial Diary"
-        isLastPage={true}
-        plotId={null}
-        categoryId={null}
-      />
-    );
-
-    return pages;
-  };
-
-  const handleChapterNavigation = (chapterIndex) => {
-    if (flipbookRef.current) {
-      const pageIndex = chapterIndex * 3;
-      flipbookRef.current.pageFlip().turnToPage(pageIndex);
-    }
-  };
-
+  
   const handleSearchClick = () => {
     navigate('/search');
   };
@@ -184,7 +236,7 @@ const FlipbookWithLogin = () => {
           ref={flipbookRef}
           disableFlip={!isLoggedIn}
         >
-          {generatePages()}
+          {pages}
         </HTMLFlipBook>
       </div>
 
@@ -201,18 +253,6 @@ const FlipbookWithLogin = () => {
         <button className="nav-icon bottom-left pen" onClick={handlePenClick}>
         <img src="/pen3.png" alt="Pen" />
         </button>
-      </div>
-
-      <div className="nav-bar">
-        {chapterNames.map((chapterName, index) => (
-          <button
-            key={index}
-            className="nav-button"
-            onClick={() => handleChapterNavigation(index + 1)}
-          >
-            {chapterName}
-          </button>
-        ))}
       </div>
 
       {isLoggedIn && (

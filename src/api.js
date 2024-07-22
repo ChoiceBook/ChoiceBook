@@ -2,55 +2,46 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'http://172.10.7.117/api',
-  withCredentials: true
+  withCredentials: true,
 });
 
+// Function to refresh the access token
 export const refreshAccessToken = async (refreshToken) => {
   const response = await api.post('/auth/refresh-token', { refreshToken });
   return response.data;
 };
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+// Function to fetch plots (tests) for a specific user and category
+export const fetchPlots = async (categoryId) => {
+  try {
+    const response = await api.get(`/users/1/categories/${categoryId}/plots`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching plots:', error);
+    throw error; // Throw error to be handled by calling code
   }
-  
-  if (config.url === '/game/trade') {
-    console.log('Trade Request:', {
-      url: config.url,
-      method: config.method,
-      data: config.data
-    });
-  }
-  
-  console.log('Request Config:', config);
-  return config;
-}, (error) => {
-  console.error('Request Error:', error);
-  return Promise.reject(error);
-});
+};
 
-api.interceptors.response.use((response) => {
-  if (response.config.url === '/game/trade') {
-    console.log('Trade Response:', {
-      status: response.status,
-      data: response.data
-    });
+// Function to fetch ranks for a specific plot and user
+export const fetchRanks = async (plotId, userId) => {
+  try {
+    const response = await api.get(`/plots/${plotId}/users/${userId}/ranks`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching ranks:', error);
+    throw error; // Throw error to be handled by calling code
   }
-  
-  console.log('Response:', response);
-  return response;
-}, (error) => {
-  if (error.config.url === '/game/trade') {
-    console.error('Trade Error:', {
-      status: error.response ? error.response.status : 'Unknown',
-      data: error.response ? error.response.data : error.message
-    });
+};
+
+// Function to fetch item details based on item ID
+export const fetchItemDetails = async (itemId) => {
+  try {
+    const response = await api.get(`/items/${itemId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching item details:', error);
+    throw error; // Throw error to be handled by calling code
   }
-  
-  console.error('Response Error:', error.response || error);
-  return Promise.reject(error);
-});
+};
 
 export default api;
