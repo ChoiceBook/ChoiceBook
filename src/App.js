@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Co
 import FlipbookWithLogin from './FlipbookWithLogin';
 import CreateTest from './CreateTest';
 import SearchPage from './SearchPage';
+import PlotPage from './PlotPage';
 import { AuthProvider } from './AuthContext'; // AuthProvider 추가
 import './App.css'; // Ensure this path is correct
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<FlipbookWithLogin />} />
             <Route path="/create-test" element={<CreateTest />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/plots/:id" element={<PlotPage />} />
           </Routes>
         </Router>
       </AuthProvider>
