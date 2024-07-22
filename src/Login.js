@@ -1,6 +1,5 @@
 // src/components/Auth/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import api from './api';
 import './Login.css';
@@ -10,7 +9,6 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태 추가
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();

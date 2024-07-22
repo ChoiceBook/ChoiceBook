@@ -1,0 +1,118 @@
+/* src/TextPage.css */
+
+@font-face {
+    font-family: 'Brysthy';
+    src: url('./fonts/Brysthy.ttf') format('truetype');
+  }
+
+.flipbook-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white; /* Default background color */
+    overflow: hidden; /* Prevent overflow from the page itself */
+    pointer-events: auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.flipbook-page.flipbook-page--before,
+.flipbook-page.flipbook-page--after {
+  border-radius: 10px; /* Ensure even the flipped pages have rounded corners */
+}
+  
+  .cover-page {
+    background-color: #A80839; /* Cover page color */
+    color: white; /* Text color on cover page */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; /* Adjust font size as needed */
+    border-radius: 10px;
+  }
+  
+  .front-cover h1 {
+    margin-top: 23%;
+    text-align: center;
+    font-family: 'Brysthy';
+  }
+  
+  .first-page .cover-page-content,
+  .last-page .cover-page-content {
+    text-align: center;
+  }
+  
+  .page-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add padding if needed */
+    box-sizing: border-box; /* Ensure padding is included in height */
+    border-radius: 10px;
+  }
+  
+  .page-content h1 {
+    margin-bottom: 5%;
+  }
+
+  .page-content h2 {
+    font-size: 1.2rem; /* Adjust font size for h2 elements */
+}
+
+.page-content p {
+    font-size: 1rem; /* Adjust font size for paragraph elements */
+}
+  
+  .page-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .item-row {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    margin-bottom: 10px; /* Space between rows */
+  }
+  
+  .item-info {
+    display: flex;
+    align-items: center; /* Align rank and name horizontally */
+  }
+  
+  .item-info h2 {
+    margin: 0;
+    margin-right: 10px; /* Space between rank and name */
+    font-size: 1rem; /* Adjust font size as needed */
+  }
+  
+  .item-info p {
+    margin: 0;
+    font-size: 1rem; /* Adjust font size as needed */
+  }
+  
+  .item-image-container {
+    margin-top: 10px; /* Space above the image */
+    text-align: center; /* Center the image if desired */
+  }
+  
+  .item-image {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+  }
+  
+  .chapter-page {
+    background-color: #d8a0b1; /* Cover page color */
+    color: rgb(62, 62, 62); /* Text color on cover page */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; /* Adjust font size as needed */
+    font-size: 2rem; /* Adjust font size as needed */
+    border-radius: 10px;
+  }
