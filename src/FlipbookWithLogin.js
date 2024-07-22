@@ -46,7 +46,7 @@ const FlipbookWithLogin = () => {
   const generatePages = () => {
     // Add the main cover page
     const pages = [
-      <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" plotId={null} categoryId={null} /> // Main cover page
+      <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" isFirstPage={true} plotId={null} categoryId={null} />
     ];
   
     // Generate pages for each chapter
@@ -74,6 +74,7 @@ const FlipbookWithLogin = () => {
         key="final-page"
         isCoverPage={true}
         title="나의 취향을 담는 곳, Memorial Diary"
+        isLastPage={true}
         plotId={null}
         categoryId={null}
       />
@@ -132,13 +133,13 @@ const FlipbookWithLogin = () => {
           )}
         </div>
           <HTMLFlipBook
-            width={700}
-            height={800}
+            width={500}
+            height={700}
             size="stretch"
-            minWidth={315}
+            minWidth={300}
             maxWidth={700}
-            minHeight={420}
-            maxHeight={1350}
+            minHeight={400}
+            maxHeight={800}
             drawShadow={true}
             flippingTime={700}
             usePortrait={true}
@@ -162,12 +163,15 @@ const FlipbookWithLogin = () => {
       {/* Navigation icons */}
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
         <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>
-        <img src="/postcard.png" alt="PostCard" />
+        <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
+        <div className="profile-overlay">
+      <img src="/profile.png" alt="Profile" />
+        </div>
         </button>
         <button className="nav-icon top-right search" onClick={handleSearchClick}>
           <img src="/glass.png" alt="Search" />
         </button>
-        <button className="nav-icon bottom-left pen" onClick={handlePenClick} style={{ width: '100px', height: '100px' }}>
+        <button className="nav-icon bottom-left pen" onClick={handlePenClick}>
         <img src="/pen3.png" alt="Pen" />
         </button>
         {/*<button className="nav-icon bottom-right clock" onClick={handleClockClick}>
