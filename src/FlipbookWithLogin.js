@@ -5,12 +5,14 @@ import HTMLFlipBook from 'react-pageflip';
 import './Flipbook.css';
 import './Login.css';
 import Login from './Login';
+import Register from './Register'; // Register 컴포넌트 추가
 import TextPage from './TextPage';
 
 const FlipbookWithLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isLockHidden, setIsLockHidden] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false); // 회원가입 상태 추가
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
 
@@ -44,6 +46,14 @@ const FlipbookWithLogin = () => {
     setTimeout(() => {
       setIsLockHidden(true);
     }, 1500);
+  };
+
+  const handleRegisterClick = () => {
+    setIsRegistering(true); // 회원가입 창으로 전환
+  };
+
+  const handleBackToLoginClick = () => {
+    setIsRegistering(false); // 로그인 창으로 전환
   };
 
   const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
@@ -108,7 +118,11 @@ const FlipbookWithLogin = () => {
     <div className="flipbook-wrapper">
       <div className="login-section">
         {!isLoggedIn && isLoginVisible && (
-          <Login setIsLoggedIn={setIsLoggedIn} setIsLoginVisible={setIsLoginVisible} onLoginSuccess={handleLoginSuccess} /> // 상태 전달
+          isRegistering ? (
+            <Register onBackToLoginClick={handleBackToLoginClick} />
+          ) : (
+            <Login setIsLoggedIn={setIsLoggedIn} setIsLoginVisible={setIsLoginVisible} onLoginSuccess={handleLoginSuccess} onRegisterClick={handleRegisterClick} />
+          )
         )}
       </div>
 
@@ -120,32 +134,32 @@ const FlipbookWithLogin = () => {
             </div>
           )}
         </div>
-          <HTMLFlipBook
-            width={500}
-            height={700}
-            size="stretch"
-            minWidth={300}
-            maxWidth={700}
-            minHeight={400}
-            maxHeight={800}
-            drawShadow={true}
-            flippingTime={700}
-            usePortrait={true}
-            startZIndex={0}
-            autoSize={true}
-            maxShadowOpacity={0.5}
-            showCover={true}
-            mobileScrollSupport={true}
-            swipeDistance={30}
-            clickEventForward={false}
-            useMouseEvents={true}
-            renderOnlyPageLengthChange={false}
-            ref={flipbookRef}
-            disableFlip={!isLoggedIn}
-          >
-            {generatePages()}
-          </HTMLFlipBook>
-        </div>
+        <HTMLFlipBook
+          width={500}
+          height={700}
+          size="stretch"
+          minWidth={300}
+          maxWidth={700}
+          minHeight={400}
+          maxHeight={800}
+          drawShadow={true}
+          flippingTime={700}
+          usePortrait={true}
+          startZIndex={0}
+          autoSize={true}
+          maxShadowOpacity={0.5}
+          showCover={true}
+          mobileScrollSupport={true}
+          swipeDistance={30}
+          clickEventForward={false}
+          useMouseEvents={true}
+          renderOnlyPageLengthChange={false}
+          ref={flipbookRef}
+          disableFlip={!isLoggedIn}
+        >
+          {generatePages()}
+        </HTMLFlipBook>
+      </div>
 
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
         <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>

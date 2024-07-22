@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext';
 import api from './api';
 import './Login.css';
 
-function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess }) { // props 추가
+function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterClick }) { // props 추가
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태 추가
@@ -28,10 +28,6 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess }) { // props 
     }
   };
 
-  const handleRegister = () => {
-    navigate('/register');
-  };
-
   return (
     <div className="login-container">
       <h2>Let's Get Started!</h2>
@@ -51,7 +47,7 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess }) { // props 
           required
         />
         <button type="submit" className="login-button">Log In</button>
-        <button type="button" className="signup-button" onClick={handleRegister}>Sign Up</button>
+        <button type="button" className="signup-button" onClick={onRegisterClick}>Sign Up</button>
       </form>
       {errorMessage && <div className="error-message">{errorMessage}</div>} {/* 에러 메시지 표시 */}
     </div>
