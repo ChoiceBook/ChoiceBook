@@ -1,42 +1,18 @@
-.search-page {
-    padding: 20px;
-  }
-  
-  .search-form {
-    margin-bottom: 20px;
-  }
-  
-  .search-input {
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    margin-right: 10px;
-  }
-  
-  .search-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .search-results {
-    margin-top: 20px;
-  }
-  
-  .search-result {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .search-result h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-  
-  .search-result p {
-    margin: 5px 0 0;
-    font-size: 16px;
-  }
-  
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+}
+
+.background {
+  width: 90vw; /* 화면 너비의 90% */
+  height: 90vh; /* 화면 높이의 90% */
+  background-color: rgba(255, 255, 255, 0.8); /* 흰색 배경에 투명도 적용 */
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  border-radius: 10px; /* 둥근 모서리 */
+}
+
