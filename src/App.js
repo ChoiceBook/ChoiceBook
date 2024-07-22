@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Co
 import FlipbookWithLogin from './FlipbookWithLogin';
 import CreateTest from './CreateTest';
 import SearchPage from './SearchPage';
+import { AuthProvider } from './AuthContext'; // AuthProvider 추가
 import './App.css'; // Ensure this path is correct
 
 function App() {
@@ -23,13 +24,15 @@ function App() {
 
   return (
     <div className="App" style={appStyle}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<FlipbookWithLogin />} />
-          <Route path="/create-test" element={<CreateTest />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<FlipbookWithLogin />} />
+            <Route path="/create-test" element={<CreateTest />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }

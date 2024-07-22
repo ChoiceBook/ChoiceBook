@@ -1,58 +1,61 @@
+// src/FlipbookWithLogin.js
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
-import './Flipbook.css'; // Import the stylesheet
-import './Login.css'; // Import the login stylesheet
-import TextPage from './TextPage'; // Import the TextPage component
+import './Flipbook.css';
+import './Login.css';
+import Login from './Login';
+import TextPage from './TextPage';
 
 const FlipbookWithLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isLockHidden, setIsLockHidden] = useState(false);
   const flipbookRef = useRef(null);
-  const navigate = useNavigate(); // Define navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedIn);
-    setIsLockHidden(loggedIn);
+    if (loggedIn) {
+      setIsLockHidden(true);
+    }
   }, []);
 
   const handleLockClick = () => {
     setIsLoginVisible(!isLoginVisible);
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-    setIsLoginVisible(false);
-    setIsLockHidden(true);
-    localStorage.setItem('isLoggedIn', 'true');
-  };
-
   const handleLogout = () => {
     if (flipbookRef.current) {
-      flipbookRef.current.pageFlip().turnToPage(0); // Flip to the cover page
+      flipbookRef.current.pageFlip().turnToPage(0);
     }
     setTimeout(() => {
       setIsLoggedIn(false);
       setIsLockHidden(false);
       localStorage.setItem('isLoggedIn', 'false');
-    }, 700); // Delay to match the flipping time
+    }, 700);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setIsLoginVisible(false);
+    localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태를 로컬 스토리지에 저장
+    setTimeout(() => {
+      setIsLockHidden(true);
+    }, 1500);
   };
 
   const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
 
   const generatePages = () => {
-    // Add the main cover page
     const pages = [
       <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" isFirstPage={true} plotId={null} categoryId={null} />
     ];
-  
-    // Generate pages for each chapter
+
     for (let chapter = 0; chapter < chapterNames.length; chapter++) {
-      const categoryId = chapter + 1; // Example category ID; adjust if needed
-  
+      const categoryId = chapter + 1;
+
       for (let i = 1; i <= 3; i++) {
         pages.push(
           <TextPage 
@@ -67,8 +70,7 @@ const FlipbookWithLogin = () => {
         );
       }
     }
-  
-    // Add the final cover page
+
     pages.push(
       <TextPage
         key="final-page"
@@ -79,11 +81,9 @@ const FlipbookWithLogin = () => {
         categoryId={null}
       />
     );
-  
+
     return pages;
   };
-  
-  
 
   const handleChapterNavigation = (chapterIndex) => {
     if (flipbookRef.current) {
@@ -97,30 +97,18 @@ const FlipbookWithLogin = () => {
   };
 
   const handlePostCardClick = () => {
-    navigate('/post-card'); // Update this to the correct route
+    navigate('/post-card');
   };
 
   const handlePenClick = () => {
-    navigate('/create-test'); // Update this to the correct route
+    navigate('/create-test');
   };
 
-  /*const handleClockClick = () => {
-    navigate('/clock'); // Update this to the correct route
-  };*/
-
-  return (
+  return ( 
     <div className="flipbook-wrapper">
-      {/* Login form next to flipbook */}
       <div className="login-section">
         {!isLoggedIn && isLoginVisible && (
-          <div className="login-form">
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-              <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
-              <button type="submit">Login</button>
-            </form>
-          </div>
+          <Login setIsLoggedIn={setIsLoggedIn} setIsLoginVisible={setIsLoginVisible} onLoginSuccess={handleLoginSuccess} /> // 상태 전달
         )}
       </div>
 
@@ -159,8 +147,6 @@ const FlipbookWithLogin = () => {
           </HTMLFlipBook>
         </div>
 
-
-      {/* Navigation icons */}
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
         <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>
         <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
@@ -174,31 +160,25 @@ const FlipbookWithLogin = () => {
         <button className="nav-icon bottom-left pen" onClick={handlePenClick}>
         <img src="/pen3.png" alt="Pen" />
         </button>
-        {/*<button className="nav-icon bottom-right clock" onClick={handleClockClick}>
-        <img src="/clock.png" alt="Clock" />
-        </button>*/}
       </div>
 
-      {/* Navigation bar */}
       <div className="nav-bar">
-  {chapterNames.map((chapterName, index) => (
-    <button
-      key={index}
-      className="nav-button"
-      onClick={() => handleChapterNavigation(index + 1)}
-    >
-      {chapterName}
-    </button>
-  ))}
-</div>
+        {chapterNames.map((chapterName, index) => (
+          <button
+            key={index}
+            className="nav-button"
+            onClick={() => handleChapterNavigation(index + 1)}
+          >
+            {chapterName}
+          </button>
+        ))}
+      </div>
 
-{/* Logout Button */}
-{isLoggedIn && (
+      {isLoggedIn && (
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>
       )}
-
     </div>
   );
 };
