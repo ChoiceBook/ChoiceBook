@@ -57,9 +57,14 @@ const TextPage = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div className="flipbook-page" ref={ref} data-density={props.soft ? "soft" : "hard"} onClick={handleClick}>
+    <div
+      className={`flipbook-page ${props.isCoverPage ? 'cover-page' : ''} ${props.isFirstPage ? 'first-page' : ''} ${props.isLastPage ? 'last-page' : ''}`}
+      ref={ref}
+      data-density={props.soft ? "soft" : "hard"}
+      onClick={handleClick}
+    >
       {props.isCoverPage ? (
-        <div className="cover-page">
+        <div className="cover-page-content">
           <h1>{props.title}</h1>
         </div>
       ) : (

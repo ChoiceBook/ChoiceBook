@@ -50,7 +50,7 @@ const FlipbookWithLogin = () => {
 
   const generatePages = () => {
     const pages = [
-      <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" plotId={null} categoryId={null} />
+      <TextPage key="cover-page" isCoverPage={true} title="Memorial Diary" isFirstPage={true} plotId={null} categoryId={null} />
     ];
 
     for (let chapter = 0; chapter < chapterNames.length; chapter++) {
@@ -76,6 +76,7 @@ const FlipbookWithLogin = () => {
         key="final-page"
         isCoverPage={true}
         title="나의 취향을 담는 곳, Memorial Diary"
+        isLastPage={true}
         plotId={null}
         categoryId={null}
       />
@@ -119,42 +120,45 @@ const FlipbookWithLogin = () => {
             </div>
           )}
         </div>
-        <HTMLFlipBook
-          width={700}
-          height={800}
-          size="stretch"
-          minWidth={315}
-          maxWidth={700}
-          minHeight={420}
-          maxHeight={1350}
-          drawShadow={true}
-          flippingTime={700}
-          usePortrait={true}
-          startZIndex={0}
-          autoSize={true}
-          maxShadowOpacity={0.5}
-          showCover={true}
-          mobileScrollSupport={true}
-          swipeDistance={30}
-          clickEventForward={false}
-          useMouseEvents={true}
-          renderOnlyPageLengthChange={false}
-          ref={flipbookRef}
-          disableFlip={!isLoggedIn}
-        >
-          {generatePages()}
-        </HTMLFlipBook>
-      </div>
+          <HTMLFlipBook
+            width={500}
+            height={700}
+            size="stretch"
+            minWidth={300}
+            maxWidth={700}
+            minHeight={400}
+            maxHeight={800}
+            drawShadow={true}
+            flippingTime={700}
+            usePortrait={true}
+            startZIndex={0}
+            autoSize={true}
+            maxShadowOpacity={0.5}
+            showCover={true}
+            mobileScrollSupport={true}
+            swipeDistance={30}
+            clickEventForward={false}
+            useMouseEvents={true}
+            renderOnlyPageLengthChange={false}
+            ref={flipbookRef}
+            disableFlip={!isLoggedIn}
+          >
+            {generatePages()}
+          </HTMLFlipBook>
+        </div>
 
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
         <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>
-          <img src="/postcard.png" alt="PostCard" />
+        <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
+        <div className="profile-overlay">
+      <img src="/profile.png" alt="Profile" />
+        </div>
         </button>
         <button className="nav-icon top-right search" onClick={handleSearchClick}>
           <img src="/glass.png" alt="Search" />
         </button>
-        <button className="nav-icon bottom-left pen" onClick={handlePenClick} style={{ width: '100px', height: '100px' }}>
-          <img src="/pen3.png" alt="Pen" />
+        <button className="nav-icon bottom-left pen" onClick={handlePenClick}>
+        <img src="/pen3.png" alt="Pen" />
         </button>
       </div>
 
