@@ -7,14 +7,30 @@ import SearchPage from './SearchPage';
 import './App.css'; // Ensure this path is correct
 
 function App() {
+  const appStyle = {
+    height: '100vh',
+    margin: 0,
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100vw',
+    backgroundImage: 'url(/newspaper.jpg)', // Inline style
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<FlipbookWithLogin />} />
-        <Route path="/create-test" element={<CreateTest />} />
-        <Route path="/search" element={<SearchPage />} />
-      </Routes>
-    </Router>
+    <div className="App" style={appStyle}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<FlipbookWithLogin />} />
+          <Route path="/create-test" element={<CreateTest />} />
+          <Route path="/search" element={<SearchPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
