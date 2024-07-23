@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './PlotPage.css';
-import { Sort } from './components/Sort';
+import TestBook from './components/TestBook';
 
 
 const PlotPage = () => {
@@ -25,7 +25,7 @@ const PlotPage = () => {
   return (
     <div className="plot-container">
       <div className="background">
-        <Sort items= { items }/>
+        <TestBook items= { items }/>
       </div>
     </div>
   );
