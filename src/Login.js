@@ -15,11 +15,15 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
     try {
       const response = await api.post('/auth/login', { email, password });
       const userData = response.data;
-      login(userData);
-      setIsLoggedIn(true); // 로그인 상태 업데이트
-      setIsLoginVisible(false); // 로그인 폼 숨기기
-      setErrorMessage(''); // 에러 메시지 초기화
-      onLoginSuccess(); // 로그인 성공 시 호출
+      if (userData.userId) {
+        login(userData); // Update AuthContext with userData
+        setIsLoggedIn(true);
+        setIsLoginVisible(false);
+        setErrorMessage('');
+        onLoginSuccess();
+      } else {
+        throw new Error('User ID not found in the response');
+      }
     } catch (error) {
       console.error('Login failed:', error);
       setErrorMessage(error.response?.data?.message || 'An error occurred during login'); // 에러 메시지 설정

@@ -12,9 +12,9 @@ export const refreshAccessToken = async (refreshToken) => {
 };
 
 // Function to fetch plots (tests) for a specific user and category
-export const fetchPlots = async (categoryId) => {
+export const fetchPlots = async (categoryId, userId) => {
   try {
-    const response = await api.get(`/users/1/categories/${categoryId}/plots`);
+    const response = await api.get(`/users/${userId}/categories/${categoryId}/plots`);
     return response.data;
   } catch (error) {
     console.error('Error fetching plots:', error);

@@ -6,9 +6,10 @@ import './Login.css';
 import Login from './Login';
 import Register from './Register';
 import { generatePages } from './generatePages';
-
+import { useAuth } from './AuthContext'; // Import useAuth to get user info
 
 const FlipbookWithLogin = () => {
+  const { user, loading } = useAuth(); // Get user and loading state from AuthContext
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isLockHidden, setIsLockHidden] = useState(false);
@@ -18,15 +19,20 @@ const FlipbookWithLogin = () => {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (loading) return; // Wait until user data is loaded
+
+    const loggedIn = !!user;
+
     setIsLoggedIn(loggedIn);
     if (loggedIn) {
       setIsLockHidden(true);
     }
 
     const loadData = async () => {
+      if (!user) return; // Wait for user data to be available
+
       try {
-        const generatedPages = await generatePages();
+        const generatedPages = await generatePages(user.userId);
         setPages(generatedPages);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -34,7 +40,7 @@ const FlipbookWithLogin = () => {
     };
 
     loadData();
-  }, []);
+  }, [user, loading]);
 
   const handleLockClick = () => {
     setIsLoginVisible(!isLoginVisible);
