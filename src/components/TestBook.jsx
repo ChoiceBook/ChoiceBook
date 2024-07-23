@@ -207,24 +207,24 @@ const TestBook = ({ items }) => {
           console.log("Right Image URL:", rightImageUrl); // Log the URL for debugging
 
           setLeftField(
-              <div>
-                  <img 
-                      src={leftImageUrl} 
-                      alt={namMember[leftItemId]} 
-                      className="item-image"
-                  />
-                  <p>{namMember[leftItemId]}</p>
-              </div>
+            <div className="item-container">
+              <p className="item-text">{namMember[leftItemId]}</p>
+            <img 
+                src={leftImageUrl} 
+                alt={namMember[leftItemId]} 
+                className="item-image-box"
+            />
+        </div>
           );
     
           setRightField(
-            <div>
+            <div className="item-container">
+                <p className="item-text">{namMember[rightItemId]}</p>
                 <img 
                     src={rightImageUrl} 
                     alt={namMember[rightItemId]} 
-                    className="item-image" 
+                    className="item-image-box" 
                 />
-                <p>{namMember[rightItemId]}</p>
             </div>
         );
         setBattleNumber(`Battle No. ${numQuestion}<br>${Math.floor(finishSize * 100 / totalSize)}% sorted.`);

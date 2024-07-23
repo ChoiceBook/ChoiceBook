@@ -1,20 +1,54 @@
+@font-face {
+  font-family: 'Mapo';
+  src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+}
+
+.postcard-container {
+  position: relative;
+  width: 100%;
+  max-width: 33vw; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.postcard-image {
+  width: 100%;
+  height: auto;
+}
+
+.content-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 90%;
+  padding: 20px;
+  height: auto;
+  max-width: 800px; /* Adjust the maximum width as needed */
+}
 
 .login-container {
+  position: absolute;
+  top: 145%;
+  left: 24%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 400px;
-  padding: 40px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 47%;
+  padding: 20px;
+  background-color: transparent; /* Slightly transparent background */
   border-radius: 8px;
-  margin: 20px auto;
+  z-index: 2;
+  max-width: 400px;
 }
 
 .login-container h2 {
   font-size: 24px;
+  font-family: 'Mapo';
   margin-bottom: 20px;
 }
 
@@ -25,6 +59,7 @@
 }
 
 .login-container input {
+  font-family: 'Mapo';
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
@@ -35,6 +70,7 @@
 .login-container button {
   padding: 10px 20px;
   font-size: 16px;
+  font-family: 'Mapo';
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -59,3 +95,19 @@
   background-color: #ddd;
 }
 
+.text-container-login {
+  position: absolute;
+  top: -20%;
+  left: 61%;
+  width: 40%;
+  margin-left: 5%;
+  background-color: transparent; /* Slightly transparent background */
+  z-index: 2;
+}
+
+.text-container-login p {
+  font-family: 'Mapo';
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}

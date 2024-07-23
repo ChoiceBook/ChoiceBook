@@ -22,34 +22,41 @@ function Register({ onBackToLoginClick }) {
   };
 
   return (
-    <div className="register-container">
-      <h2>Create an Account</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-        <button type="submit" className="register-button">Sign Up</button>
-        <button type="button" className="back-button" onClick={onBackToLoginClick}>Back to Login</button>
-      </form>
-      {errorMessage && <div className="error-message">{errorMessage}</div>} {/* 에러 메시지 표시 */}
+    <div className="postcard-container">
+      <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
+      <div className="content-container">
+        <div className="register-container">
+          <form onSubmit={handleRegister}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+            <input
+              type="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              required
+            />
+            <button type="submit" className="register-button">Sign Up</button>
+            <button type="button" className="back-button" onClick={onBackToLoginClick}>Back to Login</button>
+          </form>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+        </div>
+        <div className="text-container">
+          <p>Welcome To Our Memory!</p>
+        </div>
+      </div>
     </div>
   );
 }

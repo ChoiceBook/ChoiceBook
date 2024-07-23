@@ -12,6 +12,16 @@ html, body {
   src: url('./fonts/Brysthy.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Gabia';
+  src: url('./fonts/GabiaMaeumgyeol.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mapo';
+  src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+}
+
 .flipbook-wrapper {
   display: flex;
   justify-content: center; /* Center horizontally */
@@ -85,66 +95,6 @@ html, body {
     max-width: 400px; /* Adjust max-width */
     max-height: 400px; /* Adjust max-height */
   }
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100%;
-  background-color: #333;
-  color: white;
-  overflow-x: hidden;
-  transition: transform 0.3s ease, opacity 0.5s ease;
-  transform: translateX(-100%); /* Initially hidden */
-  opacity: 0; /* Initially hidden */
-  z-index: 1000;
-}
-
-.sidebar.open {
-  transform: translateX(0); /* Show the sidebar */
-  opacity: 1; /* Show the sidebar */
-}
-
-.sidebar-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: flex-start; /* Align content to the top */
-  position: relative; /* Allows positioning of child elements */
-}
-
-.sidebar-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.toggle-sidebar-btn {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 24px; /* Larger font size for better visibility */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px; /* Adjust padding */
-  cursor: pointer;
-  z-index: 1000;
-  width: auto; /* Ensure the button width does not expand */
-  height: auto; /* Ensure the button height does not expand */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.toggle-sidebar-btn:hover {
-  background-color: #0056b3;
 }
 
 .create-test-btn {
@@ -330,12 +280,6 @@ html, body {
   transform: rotate(20deg); /* Rotate the pen image */
 }
 
-.nav-icon.postcard img {
-  width: 36vw;
-  height: 36vh;
-  transform: rotate(-15deg); /* Rotate the pen image */
-}
-
 .profile-overlay {
   position: absolute; /* Position it absolutely within the button */
   top: 40%; /* Adjust position from the bottom */
@@ -354,10 +298,4 @@ html, body {
   height: 100%; /* Ensure the image fits within the overlay */
   object-fit: cover; /* Maintain aspect ratio and cover the container */
   border-radius: 50%;
-}
-
-.postcard-image {
-  width: 36vw;
-  height: 36vh;
-  transform: rotate(-15deg);
 }
