@@ -3,7 +3,7 @@ import React from 'react';
 import { fetchPlots, fetchRanks, fetchItemDetails } from './api';
 import TextPage from './TextPage';
 
-export const generatePages = async () => {
+export const generatePages = async (userId) => {
   const generatedPages = [];
 
   const categories = [
@@ -22,7 +22,7 @@ export const generatePages = async () => {
   );
 
   for (const category of categories) {
-    const plots = await fetchPlots(category.id);
+    const plots = await fetchPlots(category.id, userId);
 
     generatedPages.push(
       <TextPage
@@ -37,7 +37,7 @@ export const generatePages = async () => {
     );
 
     const plotDataPromises = plots.map(async (plot) => {
-      const ranks = await fetchRanks(plot.plot_id, 1);
+      const ranks = await fetchRanks(plot.plot_id, userId);
 
       const itemsPromises = ranks.map(async (rank) => {
         const itemDetails = await fetchItemDetails(rank.item_id);
