@@ -45,3 +45,10 @@
     margin-top: 20px;
     text-align: center;
 }
+
+.item-image {
+    max-width: 20px;
+    max-height: 20px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}

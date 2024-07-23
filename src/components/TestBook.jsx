@@ -23,14 +23,24 @@ const TestBook = ({ items }) => {
     const [leftField, setLeftField] = useState('');
     const [rightField, setRightField] = useState('');
     const [battleNumber, setBattleNumber] = useState('');
+    const [imgUrls, setImgUrls] = useState({}); // State for image URLs
 
     useEffect(() => {
         initList();
     }, [items]); // Initialize when items change
 
     const initList = () => {
-        const names = items.map(item => item.item_name);
+      const validItemIds = items.map(item => item.item_id).filter(id => id >= 0);
+      const maxItemId = Math.max(...validItemIds, 0); // Default to 0 if no valid item_ids
+  
+      const names = items.map(item => item.item_name);
+      const urls = items.map(item => item.item_image_url);
+
+      console.log("Initialized Image URLs:", urls); // Log to check initialization
+
+
         setNamMember(names);
+        setImgUrls(urls);
 
         let n = 0;
         let mid;
@@ -179,18 +189,56 @@ const TestBook = ({ items }) => {
     };
 
     const showImage = (head1Temp, head2Temp) => {
-        if (lstMember[cmp1] && lstMember[cmp2] && head1Temp < lstMember[cmp1].length && head2Temp < lstMember[cmp2].length) {
-            setLeftField(namMember[lstMember[cmp1][head1Temp]]);
-            setRightField(namMember[lstMember[cmp2][head2Temp]]);
-            setBattleNumber(`Battle No. ${numQuestion}<br>${Math.floor(finishSize * 100 / totalSize)}% sorted.`);
-        }
-    };
+      if (lstMember[cmp1] && lstMember[cmp2] && head1Temp < lstMember[cmp1].length && head2Temp < lstMember[cmp2].length) {
+          //const leftImageUrl = imgUrls[lstMember[cmp1][head1Temp]];
+          //const rightImageUrl = imgUrls[lstMember[cmp2][head2Temp]];
 
-    useEffect(() => {
-        if (cmp1 !== null && cmp2 !== null && lstMember[cmp1] && lstMember[cmp2]) {
-            showImage(head1, head2);
-        }
-    }, [cmp1, cmp2, head1, head2, lstMember]);
+          const leftItemId = lstMember[cmp1][head1Temp];
+          const rightItemId = lstMember[cmp2][head2Temp];
+
+          console.log("Left Item ID:", leftItemId);
+          console.log("Right Item ID:", rightItemId);
+          console.log("Image URLs Array:", imgUrls); // Check if image URLs are present
+
+          const leftImageUrl = imgUrls[leftItemId];
+          const rightImageUrl = imgUrls[rightItemId];
+    
+          console.log("Left Image URL:", leftImageUrl);  // Log the URL for debugging
+          console.log("Right Image URL:", rightImageUrl); // Log the URL for debugging
+
+          setLeftField(
+              <div>
+                  <img 
+                      src={leftImageUrl} 
+                      alt={namMember[leftItemId]} 
+                      className="item-image"
+                  />
+                  <p>{namMember[leftItemId]}</p>
+              </div>
+          );
+    
+          setRightField(
+            <div>
+                <img 
+                    src={rightImageUrl} 
+                    alt={namMember[rightItemId]} 
+                    className="item-image" 
+                />
+                <p>{namMember[rightItemId]}</p>
+            </div>
+        );
+        setBattleNumber(`Battle No. ${numQuestion}<br>${Math.floor(finishSize * 100 / totalSize)}% sorted.`);
+      }
+    };
+    
+
+useEffect(() => {
+  console.log("Image URLs:", imgUrls); // Log to check URL mapping
+
+    if (cmp1 !== null && cmp2 !== null && lstMember[cmp1] && lstMember[cmp2]) {
+        showImage(head1, head2);
+    }
+}, [cmp1, cmp2, head1, head2, lstMember, imgUrls]);
 
     const handleChoice = (choice) => {
         if (finishFlag) return;
