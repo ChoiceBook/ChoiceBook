@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './CreateTest.css'; // Import the CSS file
+import { useAuth } from './AuthContext';
 
 const CreateTest = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
+  const { user, loading } = useAuth();
 
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target;
@@ -32,14 +34,38 @@ const CreateTest = () => {
     setImages(prevImages => [...prevImages, { file: null, title: '' }]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log({ title, description, categories, images });
-  };
+
+    const data = {
+        user_id: user.userId, // 사용자 ID 추가
+        title: title,
+        description: description
+    };
+    console.log(user.userId, title, description)
+    try {
+        const response = await fetch(`http://172.10.7.117/api/plots`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
   return (
     <div className="create-test-container">
+      <div className="background">
       <h1>플롯 만들기</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -162,6 +188,7 @@ const CreateTest = () => {
         </div>
         <button type="submit">Create Test</button>
       </form>
+      </div>
     </div>
   );
 };
