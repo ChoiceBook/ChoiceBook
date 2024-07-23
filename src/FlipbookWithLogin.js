@@ -88,23 +88,26 @@ const FlipbookWithLogin = () => {
   };
 
   const handleRegisterClick = () => {
-    setIsRegistering(true);
+      setIsRegistering(true);
   };
 
   const handleBackToLoginClick = () => {
-    setIsRegistering(false);
+      setIsRegistering(false);
   };
   const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
   const handleSearchClick = () => {
-    navigate('/search');
+    if (isLoggedIn)
+      navigate('/search');
   };
 
   const handlePostCardClick = () => {
-    navigate('/post-card');
+    if (isLoggedIn)
+      navigate('/post-card');
   };
 
   const handlePenClick = () => {
-    navigate('/create-test');
+    if (isLoggedIn)
+      navigate('/create-test');
   };
 
   return (
