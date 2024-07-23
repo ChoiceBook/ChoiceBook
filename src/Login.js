@@ -31,8 +31,10 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
   };
 
   return (
+    <div className="postcard-container">
+      <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
+      <div className="content-container">
     <div className="login-container">
-      <h2>Let's Get Started!</h2>
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -52,6 +54,11 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
         <button type="button" className="signup-button" onClick={onRegisterClick}>Sign Up</button>
       </form>
       {errorMessage && <div className="error-message">{errorMessage}</div>} {/* 에러 메시지 표시 */}
+    </div>
+    <div className="text-container-login">
+          <p>Welcome Back!</p>
+        </div>
+    </div>
     </div>
   );
 }

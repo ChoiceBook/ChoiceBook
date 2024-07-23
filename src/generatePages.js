@@ -18,7 +18,12 @@ export const generatePages = async (userId) => {
   ];
 
   generatedPages.push(
-    <TextPage key="front-cover" isCoverPage={true} isFirstPage={true} title="Memorial Diary" />
+    <TextPage key="front-cover" isCoverPage={true} isFirstPage={true} title="Memorial<br />Diary" backgroundColor="#A80839"/>
+  );
+
+  // Add a blank page after the front cover
+  generatedPages.push(
+    <TextPage key="blank-front" isCoverPage={false} isFirstPage={false} isLastPage={false} title="" backgroundColor="#A80839"/>
   );
 
   for (const category of categories) {
@@ -33,6 +38,7 @@ export const generatePages = async (userId) => {
         isCoverPage={false}
         isFirstPage={false}
         isLastPage={false}
+        backgroundColor="#d7d393"
       />
     );
 
@@ -78,8 +84,20 @@ export const generatePages = async (userId) => {
     });
   }
 
+  // Add a blank page if the total number of pages is even
+  if (generatedPages.length % 2 === 1) {
+    generatedPages.push(
+      <TextPage key="extra-page" isCoverPage={false} isFirstPage={false} isLastPage={false} title="" />
+    );
+  }
+
+  // Add a blank page before the back cover
   generatedPages.push(
-    <TextPage key="back-cover" isCoverPage={true} isLastPage={true} />
+    <TextPage key="blank-back" isCoverPage={false} isFirstPage={false} isLastPage={false} title="" backgroundColor="#A80839"/>
+  );
+
+  generatedPages.push(
+    <TextPage key="back-cover" isCoverPage={true} isLastPage={true} backgroundColor="#A80839"/>
   );
 
   return generatedPages;

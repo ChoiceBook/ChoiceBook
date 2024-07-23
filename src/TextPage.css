@@ -4,6 +4,16 @@
     font-family: 'Brysthy';
     src: url('./fonts/Brysthy.ttf') format('truetype');
   }
+  
+  @font-face {
+    font-family: 'Gabia';
+    src: url('./fonts/GabiaMaeumgyeol.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Mapo';
+    src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+  }
 
 .flipbook-page {
     width: 100%;
@@ -32,11 +42,35 @@
     font-size: 2rem; /* Adjust font size as needed */
     border-radius: 10px;
   }
+
+  .front-cover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 3%;
+    width: 3px;
+    height: 102%; /* Thickness of the line */
+    background-color: black; /* Color of the line */
+    opacity: 0.8;
+    filter: blur(4px); /* Apply a blur effect */
+  }
   
   .front-cover h1 {
-    margin-top: 23%;
+    margin-top: -25%;
     text-align: center;
-    font-family: 'Brysthy';
+    font-family: 'Mapo';
+  }
+
+  .back-cover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 3%;
+    width: 3px;
+    height: 102%; /* Thickness of the line */
+    background-color: black; /* Color of the line */
+    opacity: 0.8;
+    filter: blur(4px); /* Apply a blur effect */
   }
   
   .first-page .cover-page-content,
@@ -55,23 +89,29 @@
     padding: 10px; /* Add padding if needed */
     box-sizing: border-box; /* Ensure padding is included in height */
     border-radius: 10px;
+    font-family: 'Mapo';
   }
   
   .page-content h1 {
     margin-bottom: 5%;
+    font-family: 'Mapo';
   }
 
   .page-content h2 {
     font-size: 1.2rem; /* Adjust font size for h2 elements */
+    font-family: 'Mapo';
 }
 
 .page-content p {
     font-size: 1rem; /* Adjust font size for paragraph elements */
+    font-family: 'Mapo';
 }
   
   .page-body {
     flex: 1;
     overflow-y: auto;
+    margin-bottom: 3%;
+    font-family: 'Mapo';
   }
 
   .item-row {
@@ -83,17 +123,20 @@
   .item-info {
     display: flex;
     align-items: center; /* Align rank and name horizontally */
+    font-family: 'Mapo';
   }
   
   .item-info h2 {
     margin: 0;
     margin-right: 10px; /* Space between rank and name */
     font-size: 1rem; /* Adjust font size as needed */
+    font-family: 'Mapo';
   }
   
   .item-info p {
     margin: 0;
     font-size: 1rem; /* Adjust font size as needed */
+    font-family: 'Mapo';
   }
   
   .item-image-container {
@@ -102,8 +145,10 @@
   }
   
   .item-image {
-    width: 40px; /* Adjust width as needed */
-    height: 40px; /* Adjust height as needed */
+    width: 18vw; /* Adjust width as needed */
+    height: 35vh; /* Adjust height as needed */
+    object-fit: cover; /* Crop the image to fit */
+    display: block; /* Ensure image is displayed as a block-level element */
   }
   
   .chapter-page {
@@ -112,7 +157,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Mapo';
     font-size: 2rem; /* Adjust font size as needed */
     font-size: 2rem; /* Adjust font size as needed */
     border-radius: 10px;
   }
+  

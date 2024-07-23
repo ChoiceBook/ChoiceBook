@@ -16,7 +16,10 @@
 .testbook-page {
     flex: 1; /* Make sure both pages take up equal space */
     height: 100%;
+    width: 100%; /* Ensure the page takes up full width */
     box-sizing: border-box;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
 }
 
 .testbook-page:nth-child(1) {
@@ -44,4 +47,28 @@
 .battle-number {
     margin-top: 20px;
     text-align: center;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 100%; /* Full height of the page */
+    width: 100%; /* Adjust width as needed */
+    text-align: center; /* Center the text */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.item-image-box {
+    width: 90%; /* Adjust width as needed to fit within the container */
+    max-width: 300px; /* Optional: maximum width for larger screens */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the box horizontally */
+}
+
+.item-text {
+    margin-bottom: 10px; /* Space between text and image */
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: bold; /* Optional: make text bold */
 }

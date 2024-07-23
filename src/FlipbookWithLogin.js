@@ -11,7 +11,7 @@ import { useAuth } from './AuthContext'; // Import useAuth to get user info
 const FlipbookWithLogin = () => {
   const { user, loading } = useAuth(); // Get user and loading state from AuthContext
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoginVisible, setIsLoginVisible] = useState(false);
+  const [isLoginVisible, setIsLoginVisible] = useState(true);
   const [isLockHidden, setIsLockHidden] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const flipbookRef = useRef(null);
@@ -80,11 +80,6 @@ const FlipbookWithLogin = () => {
       navigate('/search');
   };
 
-  const handlePostCardClick = () => {
-    if (isLoggedIn)
-      navigate('/post-card');
-  };
-
   const handlePenClick = () => {
     if (isLoggedIn)
       navigate('/create-test');
@@ -138,12 +133,6 @@ const FlipbookWithLogin = () => {
       </div>
 
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
-        <button className="nav-icon top-left postcard" onClick={handlePostCardClick}>
-          <img src="/postcard2.jpg" alt="PostCard" className="postcard-image" />
-          <div className="profile-overlay">
-            <img src="/profile.png" alt="Profile" />
-          </div>
-        </button>
         <button className="nav-icon top-right search" onClick={handleSearchClick}>
           <img src="/glass.png" alt="Search" />
         </button>
