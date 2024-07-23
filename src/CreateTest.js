@@ -37,30 +37,31 @@ const CreateTest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
-      user_id: user.userId, // 사용자 ID 추가
-      title: title,
-      description: description,
-    };
-
     try {
-      const response = await fetch(`http://172.10.7.117/api/plots`, {
+      // Step 1: Create the plot
+      const plotData = {
+        user_id: user.userId,
+        title: title,
+        description: description,
+      };
+
+      const plotResponse = await fetch(`http://172.10.7.117/api/plots`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(plotData),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (!plotResponse.ok) {
+        throw new Error('Failed to create plot');
       }
 
-      const result = await response.json();
-      console.log('Plot created successfully:', result);
+      const plotResult = await plotResponse.json();
+      const plotId = plotResult.plotId;
+      console.log('Plot created successfully:', plotResult);
 
-      // Plot ID를 이용하여 카테고리와 연결
-      const plotId = result.plotId;
+      // Step 2: Link categories to the plot
       const categoryData = categories.map((categoryId) => ({
         plot_id: plotId,
         category_id: categoryId,
@@ -77,12 +78,78 @@ const CreateTest = () => {
           });
 
           if (!categoryResponse.ok) {
-            throw new Error('Category network response was not ok');
+            throw new Error('Failed to link categories');
           }
         })
       );
 
       console.log('Categories linked successfully');
+
+      // Step 3: Upload items and link images
+      await Promise.all(
+        images.map(async (img, index) => {
+          const itemData = {
+            plot_id: plotId,
+            item_name: img.title
+          };
+
+          // Create the item
+          const itemResponse = await fetch(`http://172.10.7.117/api/items`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(itemData),
+          });
+
+          if (!itemResponse.ok) {
+            throw new Error('Failed to create item');
+          }
+
+          const itemResult = await itemResponse.json();
+          const itemId = itemResult.itemId;
+          console.log('Item created successfully:', itemResult);
+
+          // Upload the image
+          const formData = new FormData();
+          formData.append('title', itemId);
+          formData.append('image', img.file);
+          
+          console.log(itemId);
+          const imageResponse = await fetch(`http://172.10.7.117/api/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!imageResponse.ok) {
+            throw new Error('Failed to upload image');
+          }
+
+          const imageResult = await imageResponse.json();
+          console.log('Image uploaded successfully:', imageResult);
+
+          // Update the item with the image URL
+          const updateData = {
+            item_image_url: `http://172.10.7.117/uploads/${imageResult.file.path}`,
+          };
+          console.log('URL:', imageResult.file.path);
+          const updateResponse = await fetch(`http://172.10.7.117/api/items/${itemId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+          });
+
+          if (!updateResponse.ok) {
+            throw new Error('Failed to update item with image URL');
+          }
+
+          console.log('Item updated with image URL successfully');
+        })
+      );
+
+      console.log('All items created and images uploaded successfully');
     } catch (error) {
       console.error('Error:', error);
     }
