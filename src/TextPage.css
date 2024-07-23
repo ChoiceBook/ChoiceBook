@@ -107,7 +107,7 @@
   }
   
   .chapter-page {
-    background-color: #d8a0b1; /* Cover page color */
+    background-color: #d7d393; /* Cover page color */
     color: rgb(62, 62, 62); /* Text color on cover page */
     display: flex;
     align-items: center;
