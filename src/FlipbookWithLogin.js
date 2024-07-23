@@ -33,7 +33,11 @@ const FlipbookWithLogin = () => {
 
       try {
         const generatedPages = await generatePages(user.userId);
-        setPages(generatedPages);
+        setPages(generatedPages.map((page, index) => (
+          <div key={index}>
+            {page}
+          </div>
+        )));
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -50,56 +54,26 @@ const FlipbookWithLogin = () => {
     if (flipbookRef.current) {
       flipbookRef.current.pageFlip().turnToPage(0);
     }
-    const logoutButton = document.querySelector('.logout-button');
-    const lockIcon = document.querySelector('.lock-icon');
-    if (logoutButton) {
-      logoutButton.classList.add('fade-out');
-    }
-    if (lockIcon) {
-      lockIcon.classList.add('fade-in');
-    }
-    setTimeout(() => {
-      if (logoutButton) {
-        logoutButton.classList.remove('fade-out');
-      }
-      if (lockIcon) {
-        lockIcon.classList.remove('fade-in');
-      }
-      setIsLoggedIn(false);
-      setIsLockHidden(false);
-      localStorage.setItem('isLoggedIn', 'false');
-    }, 1000);
+    setIsLoggedIn(false);
+    setIsLockHidden(false);
+    localStorage.setItem('isLoggedIn', 'false');
   };
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setIsLoginVisible(false);
     localStorage.setItem('isLoggedIn', 'true');
-
-    const lockIcon = document.querySelector('.lock-icon');
-    const logoutButton = document.querySelector('.logout-button');
-    if (lockIcon) {
-      lockIcon.classList.add('fade-out');
-      if (logoutButton) {
-        logoutButton.classList.add('fade-in');
-      }
-      setTimeout(() => {
-        setIsLockHidden(true);
-        if (logoutButton) {
-          logoutButton.classList.add('fade-in');
-        }
-        lockIcon.classList.remove('fade-out');
-      }, 1000);
-    }
+    setIsLockHidden(true);
   };
 
   const handleRegisterClick = () => {
-      setIsRegistering(true);
+    setIsRegistering(true);
   };
 
   const handleBackToLoginClick = () => {
-      setIsRegistering(false);
+    setIsRegistering(false);
   };
+
   const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
   const handleSearchClick = () => {
     if (isLoggedIn)
