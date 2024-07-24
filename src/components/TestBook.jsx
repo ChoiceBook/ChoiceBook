@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import HTMLFlipBook from 'react-pageflip';
-import axios from 'axios'; // Axios import
-import './TestBook.css'; // Import the CSS for the flipbook
+import axios from 'axios';
+import './TestBook.css';
 import { useAuth } from '../AuthContext';
 
 const TestBook = ({ items, plotId }) => {
     const { user, loading } = useAuth();
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [flipped, setFlipped] = useState(false);
     const [namMember, setNamMember] = useState([]);
     const [lstMember, setLstMember] = useState([]);
     const [parent, setParent] = useState([]);
@@ -22,27 +19,25 @@ const TestBook = ({ items, plotId }) => {
     const [totalSize, setTotalSize] = useState(0);
     const [finishSize, setFinishSize] = useState(0);
     const [finishFlag, setFinishFlag] = useState(0);
-    const [resultField, setResultField] = useState(''); // Initialize state for resultField
-    const [leftField, setLeftField] = useState('');
-    const [rightField, setRightField] = useState('');
+    const [resultField, setResultField] = useState('');
+    const [leftItem, setLeftItem] = useState(null);
+    const [rightItem, setRightItem] = useState(null);
     const [battleNumber, setBattleNumber] = useState('');
-    const [imgUrls, setImgUrls] = useState({}); 
+    const [imgUrls, setImgUrls] = useState({});
     const [imgIds, setImgIds] = useState({});
+    const [topRankedItem, setTopRankedItem] = useState(null);
+    const [showResults, setShowResults] = useState(false);
 
     useEffect(() => {
         initList();
-    }, [items, plotId]); // Initialize when items change
+    }, [items, plotId]);
 
     const initList = () => {
-      const validItemIds = items.map(item => item.item_id).filter(id => id >= 0);
-      //const maxItemId = Math.max(...validItemIds, 0); // Default to 0 if no valid item_ids
-  
-      const names = items.map(item => item.item_name);
-      const urls = items.map(item => item.item_image_url);
-      const ids = items.map(item => item.item_id);
+        const validItemIds = items.map(item => item.item_id).filter(id => id >= 0);
 
-      console.log("Initialized Image URLs:", urls); // Log to check initialization
-
+        const names = items.map(item => item.item_name);
+        const urls = items.map(item => item.item_image_url);
+        const ids = items.map(item => item.item_id);
 
         setNamMember(names);
         setImgUrls(urls);
@@ -177,24 +172,48 @@ const TestBook = ({ items, plotId }) => {
     const showResult = () => {
         let ranking = 1;
         let sameRank = 1;
-        let str = "<table style='width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #000; border-collapse:collapse' align='center'>";
-        str += "<tr><td style='color:#ffffff; background-color:#000; text-align:center;'>순위</td><td style='color:#ffffff; background-color:#000; text-align:center;'>이름</td></tr>";
-        for (let i = 0; i < namMember.length; i++) {
-            str += "<tr><td style='border:1px solid #000; text-align:right; padding-right:5px;'>" + ranking + "</td><td style='border:1px solid #000; padding-left:5px;'>" + namMember[lstMember[0][i]] + "</td></tr>";
-            if (i < namMember.length - 1) {
-                if (equal[lstMember[0][i]] === lstMember[0][i + 1]) {
-                    sameRank++;
-                } else {
-                    ranking += sameRank;
-                    sameRank = 1;
-                }
+    
+        // Create a list of items with ranking
+        const rankingList = namMember.map((name, index) => {
+            const currentItem = lstMember[0][index];
+            let itemRank = ranking;
+            if (index > 0 && equal[lstMember[0][index - 1]] === lstMember[0][index]) {
+                itemRank = ranking - sameRank + 1;
+                sameRank++;
+            } else {
+                ranking += sameRank;
+                sameRank = 1;
             }
-        }
-        str += "</table>";
-        setResultField(str); // Use state to manage HTML content
+    
+            return (
+                <li key={index}>
+                    {name}
+                </li>
+            );
+        });
+    
+        // Set the result field as a styled container with the ranking list
+        setResultField(
+            <div className="ranking-list-container">
+                <div className="ranking-title">순위</div>
+                <ol className="ranking-list">
+                    {rankingList}
+                </ol>
+            </div>
+        );
+    
+        // Set the top-ranked item
+        const topItem = lstMember[0][0];
+        setTopRankedItem({
+            id: topItem,
+            name: namMember[topItem],
+            imageUrl: imgUrls[topItem]
+        });
+    
+        // Show the results
+        setShowResults(true);
         saveResultsToDB();
-
-    };
+    };    
 
     const saveResultsToDB = async () => {
         for (let i = 0; i < namMember.length; i++) {
@@ -204,7 +223,7 @@ const TestBook = ({ items, plotId }) => {
                 item_id: imgIds[lstMember[0][i]],
                 rank_value: i + 1
             };
-            console.log("Save results: ", rankData)
+            console.log("Save results: ", rankData);
             try {
                 const response = await axios.post('http://172.10.7.117/api/ranks', rankData);
                 console.log('Rank saved:', response.data);
@@ -215,102 +234,84 @@ const TestBook = ({ items, plotId }) => {
         const playData = {
             user_id: user.userId,
             plot_id: plotId
-        }
+        };
+
         try {
             const response = await axios.post('http://172.10.7.117/api/userplayedplots', playData);
             console.log('Played plot saved:', response.data);
         } catch (error) {
-            console.error('Error saving playe plot:', error);
+            console.error('Error saving played plot:', error);
         }
     };
 
     const showImage = (head1Temp, head2Temp) => {
-      if (lstMember[cmp1] && lstMember[cmp2] && head1Temp < lstMember[cmp1].length && head2Temp < lstMember[cmp2].length) {
+        if (lstMember[cmp1] && lstMember[cmp2] && head1Temp < lstMember[cmp1].length && head2Temp < lstMember[cmp2].length) {
+            const leftItemId = lstMember[cmp1][head1Temp];
+            const rightItemId = lstMember[cmp2][head2Temp];
 
-          const leftItemId = lstMember[cmp1][head1Temp];
-          const rightItemId = lstMember[cmp2][head2Temp];
+            const leftImageUrl = imgUrls[leftItemId];
+            const rightImageUrl = imgUrls[rightItemId];
 
-          console.log("Left Item ID:", leftItemId);
-          console.log("Right Item ID:", rightItemId);
-          console.log("Image URLs Array:", imgUrls); // Check if image URLs are present
+            setLeftItem({
+                id: leftItemId,
+                name: namMember[leftItemId],
+                imageUrl: leftImageUrl
+            });
 
-          const leftImageUrl = imgUrls[leftItemId];
-          const rightImageUrl = imgUrls[rightItemId];
-    
-          console.log("Left Image URL:", leftImageUrl);  // Log the URL for debugging
-          console.log("Right Image URL:", rightImageUrl); // Log the URL for debugging
+            setRightItem({
+                id: rightItemId,
+                name: namMember[rightItemId],
+                imageUrl: rightImageUrl
+            });
 
-          setLeftField(
-            <div className="item-container">
-              <p className="item-text">{namMember[leftItemId]}</p>
-            <img 
-                src={leftImageUrl} 
-                alt={namMember[leftItemId]} 
-                className="item-image-box"
-            />
-        </div>
-          );
-    
-          setRightField(
-            <div className="item-container">
-                <p className="item-text">{namMember[rightItemId]}</p>
-                <img 
-                    src={rightImageUrl} 
-                    alt={namMember[rightItemId]} 
-                    className="item-image-box" 
-                />
-            </div>
-        );
-        setBattleNumber(`Battle No. ${numQuestion}<br>${Math.floor(finishSize * 100 / totalSize)}% sorted.`);
-      }
+            setBattleNumber(`Battle No. ${numQuestion} - ${Math.floor(finishSize * 100 / totalSize)}% sorted.`);
+        }
     };
-    
 
-useEffect(() => {
-  console.log("Image URLs:", imgUrls); // Log to check URL mapping
-
-    if (cmp1 !== null && cmp2 !== null && lstMember[cmp1] && lstMember[cmp2]) {
-        showImage(head1, head2);
-    }
-}, [cmp1, cmp2, head1, head2, lstMember, imgUrls]);
+    useEffect(() => {
+        if (cmp1 !== null && cmp2 !== null && lstMember[cmp1] && lstMember[cmp2]) {
+            showImage(head1, head2);
+        }
+    }, [cmp1, cmp2, head1, head2, lstMember, imgUrls]);
 
     const handleChoice = (choice) => {
         if (finishFlag) return;
         sortList(choice);
-        setFlipped(true);
-        setTimeout(() => {
-            setFlipped(false);
-            setCurrentIndex(prevIndex => prevIndex + 1); // Move to next page
-        }, 1000); // Adjust the delay according to the flip effect duration
     };
 
     return (
         <div className="testbook-container">
-            <HTMLFlipBook width={300} height={500} className="testbook">
-            <div className="testbook-page">
-                    <div className="testbook-content" onClick={() => handleChoice(-1)}>
-                        {leftField}
+            {!showResults ? (
+                <div className="battle-container">
+                    {leftItem && (
+                        <div className="item-option" onClick={() => handleChoice(-1)}>
+                            <img src={leftItem.imageUrl} alt={leftItem.name} className="item-image" />
+                            <p className="item-name">{leftItem.name}</p>
+                        </div>
+                    )}
+                    {rightItem && (
+                        <div className="item-option" onClick={() => handleChoice(1)}>
+                            <img src={rightItem.imageUrl} alt={rightItem.name} className="item-image" />
+                            <p className="item-name">{rightItem.name}</p>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className="result-container">
+                    {topRankedItem && (
+                        <div className="top-ranked-item">
+                            <img src={topRankedItem.imageUrl} alt={topRankedItem.name} className="item-image" />
+                            <p className="item-name">{topRankedItem.name}</p>
+                        </div>
+                    )}
+                    <div className="result-list">
+                        {resultField}
                     </div>
                 </div>
-                <div className="testbook-page">
-                    <div className="testbook-content" onClick={() => handleChoice(1)}>
-                        {rightField}
-                    </div>
-                </div>
-            </HTMLFlipBook>
-            <div
-                id="resultField"
-                className="result-field"
-                dangerouslySetInnerHTML={{ __html: resultField }}
-            />
-            <div
-                id="battleNumber"
-                className="battle-number"
-                dangerouslySetInnerHTML={{ __html: battleNumber }}
-            />
+            )}
         </div>
     );
+    
 };
 
 export default TestBook;
-
