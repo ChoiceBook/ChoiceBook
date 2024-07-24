@@ -179,27 +179,12 @@ const TestBook = ({ items, plotId }) => {
     };
 
     const showResult = () => {
-        let ranking = 1;
-        let sameRank = 1;
-    
-        // Create a list of items with ranking
-        const rankingList = namMember.map((name, index) => {
-            const currentItem = lstMember[0][index];
-            let itemRank = ranking;
-            if (index > 0 && equal[lstMember[0][index - 1]] === lstMember[0][index]) {
-                itemRank = ranking - sameRank + 1;
-                sameRank++;
-            } else {
-                ranking += sameRank;
-                sameRank = 1;
-            }
-    
-            return (
-                <li key={index}>
-                    {name}
-                </li>
+        const rankingList = [];
+        for (let i = 0; i < namMember.length; i++) {
+            rankingList.push(
+                <li key={i}>{namMember[lstMember[0][i]]}</li>
             );
-        });
+        }
     
         // Set the result field as a styled container with the ranking list
         setResultField(
@@ -222,7 +207,7 @@ const TestBook = ({ items, plotId }) => {
         // Show the results
         setShowResults(true);
         saveResultsToDB();
-    };    
+    };
 
     const saveResultsToDB = async () => {
         for (let i = 0; i < namMember.length; i++) {
