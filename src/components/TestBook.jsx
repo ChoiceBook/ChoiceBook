@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import './TestBook.css'; // Import the CSS for the flipbook
+import { useAuth } from '../AuthContext';
 
-const TestBook = ({ items }) => {
+const TestBook = ({ items, plotId }) => {
+    const { user, loading } = useAuth();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
     const [namMember, setNamMember] = useState([]);
@@ -23,24 +25,27 @@ const TestBook = ({ items }) => {
     const [leftField, setLeftField] = useState('');
     const [rightField, setRightField] = useState('');
     const [battleNumber, setBattleNumber] = useState('');
-    const [imgUrls, setImgUrls] = useState({}); // State for image URLs
+    const [imgUrls, setImgUrls] = useState({}); 
+    const [imgIds, setImgIds] = useState({});
 
     useEffect(() => {
         initList();
-    }, [items]); // Initialize when items change
+    }, [items, plotId]); // Initialize when items change
 
     const initList = () => {
       const validItemIds = items.map(item => item.item_id).filter(id => id >= 0);
-      const maxItemId = Math.max(...validItemIds, 0); // Default to 0 if no valid item_ids
+      //const maxItemId = Math.max(...validItemIds, 0); // Default to 0 if no valid item_ids
   
       const names = items.map(item => item.item_name);
       const urls = items.map(item => item.item_image_url);
+      const ids = items.map(item => item.item_id);
 
       console.log("Initialized Image URLs:", urls); // Log to check initialization
 
 
         setNamMember(names);
         setImgUrls(urls);
+        setImgIds(ids);
 
         let n = 0;
         let mid;
@@ -186,6 +191,20 @@ const TestBook = ({ items }) => {
         }
         str += "</table>";
         setResultField(str); // Use state to manage HTML content
+        saveResultsToDB();
+
+    };
+
+    const saveResultsToDB = async () => {
+        for (let i = 0; i < namMember.length; i++) {
+            const rankData = {
+                user_id: user.userId,
+                plot_id: plotId,
+                item_id: imgIds[lstMember[0][i]],
+                rank_value: i + 1
+            };
+            console.log("Save results: ", rankData)
+        }
     };
 
     const showImage = (head1Temp, head2Temp) => {
