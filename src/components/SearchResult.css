@@ -1,7 +1,30 @@
+@font-face {
+    font-family: 'Mapo';
+    src: url('../fonts/MapoFlowerIsland.ttf') format('truetype');
+  }
+
 .search-result {
     padding: 10px 20px;
+    background-color:transparent;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
 }
 
 .search-result:hover {
-    background-color: #efefef;
+    background-color: #FFFFFF;
+}
+.result-image {
+    width: 100%; /* 부모 요소의 너비에 맞게 조정 */
+    max-width: 300px; /* 최대 너비 설정 */
+    height: 200px; /* 고정된 높이 설정 */
+    object-fit: cover; /* 이미지가 요소를 꽉 채우도록 조정 */
+    border-radius: 8px;
+}
+.result-title {
+    font-size: 24px;
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Mapo';
 }
