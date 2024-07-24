@@ -1,7 +1,8 @@
 // generatePages.js
 import React from 'react';
-import { fetchPlots, fetchRanks, fetchItemDetails } from './api';
+import { fetchPlots, fetchRanks, fetchItemDetails, fetchUserPlots } from './api';
 import TextPage from './TextPage';
+import { FaTrash } from 'react-icons/fa'; // Importing trash can icon
 
 export const generatePages = async (userId) => {
   const generatedPages = [];
@@ -99,6 +100,64 @@ export const generatePages = async (userId) => {
     
     
   }
+// Add chapter for "내가 만든 플롯"
+generatedPages.push(
+  <TextPage
+    key="user-plots-chapter"
+    title="내가 만든 플롯"
+    content={<div />}
+    chapterPage={true}
+    isCoverPage={false}
+    isFirstPage={false}
+    isLastPage={false}
+    backgroundColor="#d7d393"
+  />
+);
+
+// Fetch user plots for the list page
+const userPlots = await fetchUserPlots(userId);
+
+// Add a separate page with a list of all user plots
+generatedPages.push(
+  <TextPage
+    key="user-plots-list"
+    title="내가 만든 플롯"
+    content={
+      <div style={{ paddingLeft: '1.5vw', paddingRight: '1.5vw', paddingTop: '1vw', paddingBottom: '1vw', display: 'flex', flexDirection: 'column' }}>
+        {userPlots.map((plot) => (
+      <div key={plot.plot_id} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.7em' }}>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.3em',
+              flex: '100%', // Allows the title to take up available space
+              minWidth: '85%', // Ensures that title column does not shrink smaller than its content
+            }}>
+              {plot.title}
+            </p>
+            <button
+              onClick={() => handleDeletePlot(plot.plot_id)}
+              style={{
+                border: 'none',
+                background: 'transparent',
+                cursor: 'pointer',
+                color: '#ccc',
+                fontSize: '1.3em',
+                marginLeft: '1em', // Pushes the button to the right end
+              }}
+            >
+              <FaTrash />
+            </button>
+          </div>
+        ))}
+      </div>
+    }
+    chapterPage={false}
+    isCoverPage={false}
+    isFirstPage={false}
+    isLastPage={false}
+    backgroundColor="#ffffff"
+  />
+);
 
   // Add a blank page if the total number of pages is even
   if (generatedPages.length % 2 === 1) {
@@ -117,4 +176,23 @@ export const generatePages = async (userId) => {
   );
 
   return generatedPages;
+};
+
+// Function to handle plot deletion
+const handleDeletePlot = async (plotId) => {
+  try {
+    const response = await fetch(`http://172.10.7.117/api/plots/${plotId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete plot');
+    }
+
+    alert('Plot deleted successfully');
+    // Refresh the page or handle post-deletion actions
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to delete plot');
+  }
 };

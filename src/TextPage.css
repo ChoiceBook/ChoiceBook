@@ -164,3 +164,6 @@
     border-radius: 10px;
   }
   
+  .user-plots-list p {
+    font-size: 2vw;
+  }
