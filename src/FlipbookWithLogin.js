@@ -21,6 +21,7 @@ const FlipbookWithLogin = () => {
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
+  const [pageIndices, setPageIndices] = useState({});
   const [postcardImage, setPostcardImage] = useState('');
 
   useEffect(() => {
@@ -46,14 +47,28 @@ const FlipbookWithLogin = () => {
               {page}
             </div>
           )));
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
+
+        // Create page indices for chapter navigation
+        const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타", "내가 만든 플롯"];
+        const indices = {};
+        generatedPages.forEach((page, index) => {
+          if (page.props.title && chapterNames.includes(page.props.title)) {
+            indices[page.props.title] = index;
+            console.log('Chapter title:', page.props.title); // Debugging log
+          }
+          console.log('Title:', page.props.title);
+        });
+
+        console.log('Indices:', indices); // Debugging log
+        setPageIndices(indices);
       }
-    };
-  
-    loadData();
-  }, [user, loading]);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  };
+
+  loadData();
+}, [user, loading]);
 
   const fetchAndSetUsername = async (userId) => {
     try {
@@ -113,7 +128,6 @@ const FlipbookWithLogin = () => {
     setIsRegistering(false);
   };
 
-  const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타"];
   const handleSearchClick = () => {
     if (isLoggedIn)
       navigate('/search');
@@ -122,6 +136,13 @@ const FlipbookWithLogin = () => {
   const handlePenClick = () => {
     if (isLoggedIn)
       navigate('/create-test');
+  };
+
+  const handleTicketClick = (category) => {
+    if (flipbookRef.current && pageIndices[category.toLowerCase()]) {
+      flipbookRef.current.pageFlip().turnToPage(pageIndices[category.toLowerCase()]);
+    }
+    console.log('category:', category); // Debugging log
   };
 
   return (
@@ -199,9 +220,40 @@ const FlipbookWithLogin = () => {
         </button>
       </div>
       {isLoggedIn && (
-        <button className="logout-button fade-in" onClick={handleLogout}>
-          Logout
-        </button>
+        <>
+          <button className="logout-button fade-in" onClick={handleLogout}>
+            Logout
+          </button>
+          <div className="tickets-container">
+          <button className="ticket-button ticket-drama" onClick={() => handleTicketClick('드라마')}>
+            <img src="/drama.png" alt="드라마" />
+          </button>
+          <button className="ticket-button ticket-movie" onClick={() => handleTicketClick('영화')}>
+            <img src="/movie.png" alt="영화" />
+          </button>
+          <button className="ticket-button ticket-game" onClick={() => handleTicketClick('게임')}>
+            <img src="/game.png" alt="게임" />
+          </button>
+          <button className="ticket-button ticket-animation" onClick={() => handleTicketClick('애니메이션')}>
+            <img src="/animation.png" alt="애니메이션" />
+          </button>
+          <button className="ticket-button ticket-music" onClick={() => handleTicketClick('음악')}>
+            <img src="/music.png" alt="음악" />
+          </button>
+          <button className="ticket-button ticket-food" onClick={() => handleTicketClick('음식')}>
+            <img src="/food.png" alt="음식" />
+          </button>
+          <button className="ticket-button ticket-sports" onClick={() => handleTicketClick('스포츠')}>
+            <img src="/sports.png" alt="스포츠" />
+          </button>
+          <button className="ticket-button ticket-etc" onClick={() => handleTicketClick('기타')}>
+            <img src="/etc.png" alt="기타" />
+          </button>
+          <button className="ticket-button ticket-myplots" onClick={() => handleTicketClick('내가 만든 플롯')}>
+            <img src="/myplots.png" alt="내가 만든 플롯" />
+          </button>
+        </div>
+        </>
       )}
     </div>
   );
