@@ -48,12 +48,6 @@ const TestBook = ({ items, plotId }) => {
       const urls = shuffledItems.map(item => item.item_image_url);
       const ids = shuffledItems.map(item => item.item_id);
 
-      console.log("Initialized Image URLs:", urls); // Log to check initialization
-
-        const names = items.map(item => item.item_name);
-        const urls = items.map(item => item.item_image_url);
-        const ids = items.map(item => item.item_id);
-
         setNamMember(names);
         setImgUrls(urls);
         setImgIds(ids);
