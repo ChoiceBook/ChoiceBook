@@ -130,7 +130,7 @@ const CreateTest = () => {
 
           // Update the item with the image URL
           const updateData = {
-            item_image_url: `http://172.10.7.117/uploads/${imageResult.file.path}`,
+            item_image_url: `http://172.10.7.117/${imageResult.file.path}`,
           };
           console.log('URL:', imageResult.file.path);
           const updateResponse = await fetch(`http://172.10.7.117/api/items/${itemId}`, {
