@@ -417,6 +417,7 @@ html, body {
   height: 55%; /* 특정 높이 값 */
   object-fit: cover; /* 이미지를 크롭하여 맞추기 */
   z-index: 1; /* 기본 이미지 위에 오도록 설정 */
+  border-radius: 8px;
 }
 
 .item-row {
