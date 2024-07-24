@@ -154,7 +154,6 @@
   .chapter-page {
     background-color: #d7d393; /* Cover page color */
     color: rgb(62, 62, 62); /* Text color on cover page */
-    display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Mapo';
