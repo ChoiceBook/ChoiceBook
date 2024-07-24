@@ -230,7 +230,7 @@ html, body {
 
 .nav-icon {
   position: absolute;
-  pointer-events: auto;
+  pointer-events: none;
   background: none;
   border: none;
   display: inline-block;
@@ -266,18 +266,18 @@ html, body {
   width: -45vw;
   height: 45vh;
   transform: rotate(-190deg); /* Rotate the pen image */
+  pointer-events: auto;
+  border: none;
+  cursor: pointer;
 }
 
 .nav-icon.search img {
-  width: 47vw;
+  width: -47vw;
   height: 47vh;
-  transform: rotate(56deg); /* Rotate the pen image */
-}
-
-.nav-icon.clock img {
-  width: 43vw;
-  height: 43vh;
-  transform: rotate(20deg); /* Rotate the pen image */
+  transform: rotate(56deg);
+  pointer-events: auto;
+  border: none;
+  cursor: pointer;
 }
 
 .postcard-container2 {
@@ -317,4 +317,93 @@ html, body {
   font-size: 16px;
   color: #333;
   margin: 0; /* Remove default margin */
+}
+
+.tickets-container {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  width: 30%;
+  height: 60%;
+  pointer-events: none; /* Allows clicks to pass through to the flipbook */
+  background-color: transparent;
+}
+
+/* Individual ticket styling */
+.ticket-button {
+  position: absolute;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.ticket-button img {
+  width: 30%; /* Adjust size as needed */
+  height: 30%;
+  cursor: pointer;
+  pointer-events: auto;
+  border: none;
+}
+
+.ticket-drama {
+  bottom: 65%;
+  left: -35%;
+  transform: rotate(10deg);
+  z-index: 10;
+}
+
+.ticket-movie {
+  bottom: 65%;
+  left: 10%;
+  transform: rotate(-5deg);
+  z-index: 10;
+}
+
+.ticket-game {
+  bottom: 52%;
+  left: -25%;
+  transform: rotate(-13deg);
+  z-index: 10;
+}
+
+.ticket-animation {
+  bottom: 46%;
+  left: 12%;
+  transform: rotate(20deg);
+  z-index: 10;
+}
+
+.ticket-music {
+  bottom: 35%;
+  left: -8%;
+  transform: rotate(-8deg);
+  z-index: 10;
+}
+
+.ticket-food {
+  bottom: 25%;
+  left: -29%;
+  transform: rotate(15deg);
+  z-index: 10;
+}
+
+.ticket-sports {
+  bottom: 20%;
+  left: 13%;
+  transform: rotate(-8deg);
+  z-index: 10;
+}
+
+.ticket-etc {
+  bottom: 7%;
+  left: -8%;
+  transform: rotate(-2deg);
+  z-index: 10;
+}
+
+.ticket-myplots {
+  bottom: 7%;
+  left: 22%;
+  transform: rotate(23deg);
+  z-index: 10;
 }
