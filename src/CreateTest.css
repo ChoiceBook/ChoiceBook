@@ -1,7 +1,12 @@
 html, body {
     height: 100%;
     margin: 0;
-    overflow: auto;
+    overflow: hidden;
+  }
+
+  @font-face {
+    font-family: 'Mapo';
+    src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
   }
 
 .create-test-container {
@@ -9,7 +14,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    text-align: left;
     padding: 20px;
     width: 100%;
     height: 100%; /* Full height */
@@ -17,22 +22,36 @@ html, body {
   }
   
   h1 {
-    margin-bottom: 20px;
+    margin-bottom: 4vh;
+    font-family: 'Mapo';
   }
   
   form {
     width: 100%;
     max-width: 600px;
+    font-family: 'Mapo';
+    margin-bottom: 5vh;
   }
   
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1vh;
   }
   
   label {
     display: block;
+    margin-top: 5vh;
     margin-bottom: 5px;
     font-weight: bold;
+    font-family: 'Mapo';
+  }
+
+  label2 {
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: 'Mapo';
   }
   
   input[type="text"],
@@ -40,40 +59,69 @@ html, body {
   input[type="file"],
   button {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: 'Mapo';
+    font-size: 1.7vh;
+    color: #767778;
   }
   
   .checkbox-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-family: 'Mapo';
   }
   
   .checkbox-group > div {
     margin: 5px;
     text-align: center;
+    font-family: 'Mapo';
+    font-family: 'Mapo';
   }
   
   .image-upload-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-family: 'Mapo';
   }
   
   button[type="submit"], .image-upload-group button {
-    background-color: #28a745;
+    background-color: #767778;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    font-family: 'Mapo';
+    margin-bottom: 10px;
+    margin-top: 13vh;
   }
   
   button[type="submit"]:hover, .image-upload-group button:hover {
-    background-color: #218838;
+    background-color: #767778;
+    font-family: 'Mapo';
   }
   
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Mapo';
+    font-size: 1.7vh;
+    color: #767778; /* Text color */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* Remove the default outline */
+  }
+  
+  textarea:focus {
+    border-color: #ccc; /* Ensure the border color stays the same */
+    box-shadow: none; /* Remove the default box shadow */
+  }

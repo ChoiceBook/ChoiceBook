@@ -14,5 +14,6 @@
   justify-content: top;
   align-items: center;
   border-radius: 10px; /* 둥근 모서리 */
+  overflow-y: auto;
 }
 

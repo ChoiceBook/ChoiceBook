@@ -50,7 +50,7 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
           placeholder="Password"
           required
         />
-        <button type="submit" className="login-button">Log In</button>
+        <button type="login" className="login-button">Log In</button>
         <button type="button" className="signup-button" onClick={onRegisterClick}>Sign Up</button>
       </form>
       {errorMessage && <div className="error-message">{errorMessage}</div>} {/* 에러 메시지 표시 */}

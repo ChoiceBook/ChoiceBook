@@ -48,7 +48,7 @@ function Register({ onBackToLoginClick }) {
               placeholder="Username"
               required
             />
-            <button type="submit" className="register-button">Sign Up</button>
+            <button type="register" className="register-button">Sign Up</button>
             <button type="button" className="back-button" onClick={onBackToLoginClick}>Back to Login</button>
           </form>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
