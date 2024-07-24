@@ -71,14 +71,18 @@ export const generatePages = async (userId) => {
             <div>
               {data.items.map(item => (
                 <div key={item.item_id} className="item-row">
-                  <div className="item-info">
-                    <h2>{item.rank_value}.</h2>
-                    <p style={{ display: 'inline-block', marginRight: '12vw' }}>{item.item_name}</p>
-                    <p style={{ display: 'inline-block' }}>
+                  <div className="item-info" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <h2>{item.rank_value}.</h2>
+                      <p style={{ marginLeft: '1vw' }}>{item.item_name}</p>
+                    </div>
+                    <p style={{ display: 'flex', alignItems: 'center', marginLeft: '12vw' }}>
                       {item.increasement !== null
                         ? item.increasement === 0
                           ? '-'
-                          : -item.increasement
+                          : item.increasement > 0
+                            ? <span style={{ color: 'red', marginLeft: '0.5vw' }}>&#9660; {item.increasement}</span> // Red downward triangle
+                            : <span style={{ color: 'blue', marginLeft: '0.5vw' }}>&#9650; {-item.increasement}</span> // Blue upward triangle
                         : 'NEW'}
                     </p>
                   </div>
@@ -92,6 +96,7 @@ export const generatePages = async (userId) => {
         />
       );
     });
+    
     
   }
 
