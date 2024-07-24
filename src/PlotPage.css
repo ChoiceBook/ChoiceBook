@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Mapo';
+    src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+  }
+
+.plot-container h1 {
+    margin-top: 6vh; /* Remove default margin */
+    margin-bottom: 0px;
+    font-size: 3vh; /* Adjust font size as needed */
+    text-align: center; /* Center the title */
+    font-family: 'Mapo';
+    font-weight: bold;
+  }
+
+.plot-container p {
+    margin-top: 3vh; /* Remove default margin */
+    margin-bottom: 0px;
+    font-size: 1.8vh; /* Adjust font size as needed */
+    text-align: center; /* Center the title */
+    font-family: 'Mapo';
+  }

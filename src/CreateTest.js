@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './CreateTest.css'; // Import the CSS file
 import { useAuth } from './AuthContext';
 
@@ -8,6 +9,7 @@ const CreateTest = () => {
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
   const { user, loading } = useAuth();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target;
@@ -32,6 +34,10 @@ const CreateTest = () => {
 
   const addImageField = () => {
     setImages(prevImages => [...prevImages, { file: null, title: '' }]);
+  };
+
+  const deleteImageField = (index) => {
+    setImages(prevImages => prevImages.filter((img, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -150,6 +156,8 @@ const CreateTest = () => {
       );
 
       console.log('All items created and images uploaded successfully');
+
+      navigate('/'); // Adjust the path as needed
     } catch (error) {
       console.error('Error:', error);
     }
@@ -274,6 +282,7 @@ const CreateTest = () => {
                   onChange={(e) => handleImageTitleChange(e, index)}
                   required
                 />
+                <button type="delete" className="delete-button" onClick={() => deleteImageField(index)}>삭제</button>
               </div>
             ))}
             <button type="button" onClick={addImageField}>
