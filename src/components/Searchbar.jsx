@@ -47,7 +47,7 @@ export const SearchBar = ({ setResults }) => {
     <div className="input-wrapper">
         <FaSearch id="search-icon"/>
         <input 
-            placeholder="Type to search..." 
+            placeholder="검색어를 입력하세요" 
             value={input} 
             onChange={(e) => handleChange(e.target.value)}
         />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useParams } from 'react-router-dom';
 import './PlotPage.css';
 import TestBook from './components/TestBook';
@@ -9,6 +10,7 @@ const PlotPage = () => {
   const [items, setItems] = useState([]);
   const [plotTitle, setPlotTitle] = useState(''); // Add state for the plot title
   const [plotDescription, setPlotDescription] = useState(''); // Add state for the plot title
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchPlotData = async () => {
@@ -36,11 +38,16 @@ const PlotPage = () => {
     fetchPlotData();
   }, [id]);
 
+  const handleClose = () => {
+    navigate('/');
+  };
+
   return (
     <div className="plot-container">
       <div className="background">
-          <h1>{plotTitle}</h1> {/* Display the plot title */}
-          <p>{plotDescription}</p>
+        <button className="close-button" onClick={handleClose}>X</button>
+        <h1>{plotTitle}</h1> {/* Display the plot title */}
+        <p>{plotDescription}</p>
         <TestBook items={items} plotId={id} />
       </div>
     </div>
