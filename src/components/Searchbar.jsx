@@ -6,19 +6,37 @@ import "./SearchBar.css"
 export const SearchBar = ({ setResults }) => {
     const [input, setInput] = useState("")
 
-    const fetchdata = (value) => {
-        fetch("http://172.10.7.117/api/plots")
-          .then((response) => response.json())
-          .then((json) => {
-            // title에 입력된 문자열이 포함된 항목만 필터링
-            const resuluts = json.filter(item => item.title.toLowerCase().includes(value.toLowerCase()));
-            setResults(resuluts);
-            console.log(resuluts);
-          })
-          .catch((error) => {
+    const fetchdata = async (value) => {
+        try {
+            const response = await fetch("http://172.10.7.117/api/plots");
+            const plots = await response.json();
+
+            // 플롯 제목을 기준으로 필터링
+            const filteredPlots = plots.filter(plot =>
+                plot.title.toLowerCase().includes(value.toLowerCase())
+            );
+
+            //각 플롯의 아이템 데이터를 가져와서 필터링
+            for (let plot of plots) {
+                const itemsResponse = await fetch(`http://172.10.7.117/api/plots/${plot.plot_id}/items`);
+                const items = await itemsResponse.json();
+
+                const matchingItems = items.filter(item =>
+                    item.item_name === value
+                );
+
+                if (matchingItems.length > 0) {
+                    filteredPlots.push(plot);
+                }
+            }
+
+            setResults(filteredPlots);
+            console.log(filteredPlots);
+
+        } catch (error) {
             console.error("Error fetching data:", error);
-          });
-      };
+        }
+    };
     
 
     const handleChange = (value) => {

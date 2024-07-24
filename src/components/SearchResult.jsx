@@ -11,13 +11,11 @@ export const SearchResult = ({ result }) => {
     useEffect(() => {
         const fetchRandomImage = async () => {
             try {
-                //console.log(`http://172.10.7.117/api/plots/${result.plot_id}/random-image`);
                 const response = await axios.get(`http://172.10.7.117/api/plots/${result.plot_id}/random-image`);
-                console.log(response)
                 if (response.status === 200) {
                     const data = response.data;
-                    console.log(data);
                     setImageUrl(data.item_image_url); // 서버가 반환하는 이미지 URL을 상태에 저장
+                    localStorage.setItem(`plot_${result.plot_id}_image`, data.item_image_url); // 이미지 URL을 localStorage에 저장
                 } else {
                     console.error('Failed to fetch image');
                 }
@@ -26,7 +24,23 @@ export const SearchResult = ({ result }) => {
             }
         };
 
-        fetchRandomImage();
+        const savedImageUrl = localStorage.getItem(`plot_${result.plot_id}_image`);
+        if (savedImageUrl) {
+            setImageUrl(savedImageUrl); // 저장된 이미지 URL이 있으면 설정
+        } else {
+            fetchRandomImage(); // 저장된 이미지 URL이 없으면 새로 가져오기
+        }
+    }, [result.plot_id]);
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            localStorage.removeItem(`plot_${result.plot_id}_image`); // 창을 떠날 때 로컬 스토리지를 비웁니다.
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
     }, [result.plot_id]);
 
     const handleClick = () => {
