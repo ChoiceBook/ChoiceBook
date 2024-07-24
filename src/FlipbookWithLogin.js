@@ -5,6 +5,7 @@ import './Flipbook.css';
 import './Login.css';
 import Login from './Login';
 import Register from './Register';
+import CoverPage from './CoverPage'; // Import the CoverPage component
 import { generatePages } from './generatePages';
 import { useAuth } from './AuthContext'; // Import useAuth to get user info
 
@@ -32,12 +33,14 @@ const FlipbookWithLogin = () => {
       if (!user) return; // Wait for user data to be available
 
       try {
-        const generatedPages = await generatePages(user.userId);
-        setPages(generatedPages.map((page, index) => (
-          <div key={index}>
-            {page}
-          </div>
-        )));
+        if (loggedIn) {
+          const generatedPages = await generatePages(user.userId);
+          setPages(generatedPages.map((page, index) => (
+            <div key={index}>
+              {page}
+            </div>
+          )));
+        }
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -105,6 +108,9 @@ const FlipbookWithLogin = () => {
             </div>
           )}
         </div>
+        {!isLoggedIn ? (
+          <CoverPage /> // Display CoverPage when user is not logged in
+        ) : (
         <HTMLFlipBook
           width={500}
           height={700}
@@ -130,6 +136,7 @@ const FlipbookWithLogin = () => {
         >
           {pages}
         </HTMLFlipBook>
+        )}
       </div>
 
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>

@@ -31,7 +31,7 @@
 
 .login-container {
   position: absolute;
-  top: 145%;
+  top: 225%;
   left: 24%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -60,11 +60,11 @@
 
 .login-container input {
   font-family: 'Mapo';
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 1vh;
+  margin-bottom: 1vh;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1vw;
 }
 
 .login-container button {
@@ -78,12 +78,12 @@
 }
 
 .login-container .login-button {
-  background-color: #6200ea;
+  background-color: #767778;
   color: white;
 }
 
 .login-container .login-button:hover {
-  background-color: #3700b3;
+  background-color: #767778;
 }
 
 .login-container .signup-button {
@@ -98,7 +98,7 @@
 .text-container-login {
   position: absolute;
   top: -20%;
-  left: 61%;
+  right: -4%;
   width: 40%;
   margin-left: 5%;
   background-color: transparent; /* Slightly transparent background */
@@ -110,4 +110,13 @@
   font-weight: bold;
   font-size: 16px;
   color: #333;
+}
+
+button[type="login"], .image-upload-group button {
+  background-color: #767778;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'Mapo';
 }

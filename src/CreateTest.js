@@ -158,10 +158,10 @@ const CreateTest = () => {
   return (
     <div className="create-test-container">
       <div className="background">
-        <h1>플롯 만들기</h1>
+        <h1>플롯 생성하기</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="title">Title:</label>
+            <label htmlFor="title">제목</label>
             <input
               type="text"
               id="title"
@@ -172,7 +172,7 @@ const CreateTest = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description">설명</label>
             <textarea
               id="description"
               name="description"
@@ -182,7 +182,7 @@ const CreateTest = () => {
             />
           </div>
           <div className="form-group">
-            <label>Categories:</label>
+            <label>카테고리</label>
             <div className="checkbox-group">
               <div>
                 <input
@@ -191,7 +191,7 @@ const CreateTest = () => {
                   value="1" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category1">드라마</label>
+                <label2 htmlFor="category1">드라마</label2>
               </div>
               <div>
                 <input
@@ -200,7 +200,7 @@ const CreateTest = () => {
                   value="2" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category2">영화</label>
+                <label2 htmlFor="category2">영화</label2>
               </div>
               <div>
                 <input
@@ -209,7 +209,7 @@ const CreateTest = () => {
                   value="3" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category3">게임</label>
+                <label2 htmlFor="category3">게임</label2>
               </div>
               <div>
                 <input
@@ -218,7 +218,7 @@ const CreateTest = () => {
                   value="4" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category4">애니메이션</label>
+                <label2 htmlFor="category4">애니메이션</label2>
               </div>
               <div>
                 <input
@@ -227,7 +227,7 @@ const CreateTest = () => {
                   value="5" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category5">음악</label>
+                <label2 htmlFor="category5">음악</label2>
               </div>
               <div>
                 <input
@@ -236,7 +236,7 @@ const CreateTest = () => {
                   value="6" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category6">음식</label>
+                <label2 htmlFor="category6">음식</label2>
               </div>
               <div>
                 <input
@@ -245,7 +245,7 @@ const CreateTest = () => {
                   value="7" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category7">스포츠</label>
+                <label2 htmlFor="category7">스포츠</label2>
               </div>
               <div>
                 <input
@@ -254,12 +254,12 @@ const CreateTest = () => {
                   value="8" // ID 값으로 설정
                   onChange={handleCategoryChange}
                 />
-                <label htmlFor="category8">기타</label>
+                <label2 htmlFor="category8">기타</label2>
               </div>
             </div>
           </div>
           <div className="form-group">
-            <label>Upload Images:</label>
+            <label><br/><br/>항목 및 이미지 업로드</label>
             {images.map((img, index) => (
               <div key={index} className="image-upload-group">
                 <input
@@ -269,7 +269,7 @@ const CreateTest = () => {
                 />
                 <input
                   type="text"
-                  placeholder="Image Title"
+                  placeholder="항목 이름"
                   value={img.title}
                   onChange={(e) => handleImageTitleChange(e, index)}
                   required
@@ -277,10 +277,10 @@ const CreateTest = () => {
               </div>
             ))}
             <button type="button" onClick={addImageField}>
-              Add Another Image
+              항목 추가하기
             </button>
           </div>
-          <button type="submit">Create Test</button>
+          <button type="submit">플롯 생성하기</button>
         </form>
       </div>
     </div>
