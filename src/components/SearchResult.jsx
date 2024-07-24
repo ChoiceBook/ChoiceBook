@@ -16,7 +16,8 @@ export const SearchResult = ({ result }) => {
                 console.log(response)
                 if (response.status === 200) {
                     const data = response.data;
-                    setImageUrl(data[0].item_image_url); // 서버가 반환하는 이미지 URL을 상태에 저장
+                    console.log(data);
+                    setImageUrl(data.item_image_url); // 서버가 반환하는 이미지 URL을 상태에 저장
                 } else {
                     console.error('Failed to fetch image');
                 }
