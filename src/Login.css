@@ -60,11 +60,11 @@
 
 .login-container input {
   font-family: 'Mapo';
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 1vh;
+  margin-bottom: 1vh;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 1vw;
 }
 
 .login-container button {
@@ -98,7 +98,7 @@
 .text-container-login {
   position: absolute;
   top: -20%;
-  left: 61%;
+  right: -4%;
   width: 40%;
   margin-left: 5%;
   background-color: transparent; /* Slightly transparent background */
