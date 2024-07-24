@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TestBook.css';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const TestBook = ({ items, plotId }) => {
+    const navigate = useNavigate();
     const { user, loading } = useAuth();
     const [namMember, setNamMember] = useState([]);
     const [lstMember, setLstMember] = useState([]);
@@ -29,8 +31,13 @@ const TestBook = ({ items, plotId }) => {
     const [showResults, setShowResults] = useState(false);
 
     useEffect(() => {
-        initList();
-    }, [items, plotId]);
+        console.log(user)
+        if (!loading && (!user || !user.userId)) {
+            navigate('/');
+        } else {
+            initList();
+        }
+    }, [items, plotId, navigate, user, loading]);
 
 
     const shuffleArray = (array) => {
