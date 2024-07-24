@@ -1,0 +1,48 @@
+/* src/components/CoverPage.css */
+.cover-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #A80839;
+    text-align: center;
+    position: absolute; /* Fix position relative to the viewport */
+    right: 0; /* Align it to the left edge of the screen */
+    top: 0; /* Align it to the top edge of the screen */
+    z-index: 10; /* Ensure it is on top of other elements */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Optional: add a shadow for better separation */
+    overflow: hidden; /* Ensure no overflow */
+  }
+  
+  .cover-page h1 {
+    margin-top: -13%;
+    text-align: center;
+    font-family: 'Mapo';
+  }
+
+  .cover-page--full-width {
+    width: 100%;
+  }
+  
+  .cover-page--half-width {
+    width: 50%;
+  }
+
+  .cover-page--no-line::before {
+    content: none;
+  }
+  
+  /* Styling with pseudo-element */
+  .cover-page--with-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 3%;
+    width: 3px;
+    height: 102%; /* Thickness of the line */
+    background-color: black; /* Color of the line */
+    opacity: 0.8;
+    filter: blur(4px); /* Apply a blur effect */
+  }
