@@ -8,6 +8,7 @@ import Register from './Register';
 import CoverPage from './CoverPage'; // Import the CoverPage component
 import { generatePages } from './generatePages';
 import { useAuth } from './AuthContext'; // Import useAuth to get user info
+import { fetchUsername } from './api'; // Import fetchUsername function
 
 const FlipbookWithLogin = () => {
   const { user, loading } = useAuth(); // Get user and loading state from AuthContext
@@ -15,6 +16,7 @@ const FlipbookWithLogin = () => {
   const [isLoginVisible, setIsLoginVisible] = useState(true);
   const [isLockHidden, setIsLockHidden] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [username, setUsername] = useState(''); // State to store username
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
@@ -27,6 +29,7 @@ const FlipbookWithLogin = () => {
     setIsLoggedIn(loggedIn);
     if (loggedIn) {
       setIsLockHidden(true);
+      fetchAndSetUsername(user.userId); // Fetch username when logged in
     }
 
     const loadData = async () => {
@@ -48,6 +51,22 @@ const FlipbookWithLogin = () => {
 
     loadData();
   }, [user, loading]);
+
+  const fetchAndSetUsername = async (userId) => {
+    try {
+      console.log('Fetching username for userId:', userId); // Debugging log
+      const userDataArray = await fetchUsername(userId);
+      console.log('Fetched userData:', userDataArray); // Debugging log
+      if (userDataArray.length > 0) {
+        const userData = userDataArray[0]; // Get the first item in the array
+        setUsername(userData.username); // Set the username from API response
+      } else {
+        console.error('No user data found'); // Log an error if the array is empty
+      }
+    } catch (error) {
+      console.error('Error fetching username:', error);
+    }
+  };
 
   const handleLockClick = () => {
     setIsLoginVisible(!isLoginVisible);
@@ -90,6 +109,16 @@ const FlipbookWithLogin = () => {
 
   return (
     <div className="flipbook-wrapper">
+      <div className={`postcard-container2 ${!isLoggedIn ? 'hidden' : ''}`}>
+        <img
+          src="/postcard2.jpg" // Update this path to your postcard image
+          alt="Postcard"
+          className="postcard-image2"
+        />
+        <div className="postcard-text-container">
+        <p className="postcard-text">{username ? `${username}` : 'Loading...'}</p>
+        </div>
+      </div>
       <div className="login-section">
         {!isLoggedIn && isLoginVisible && (
           isRegistering ? (

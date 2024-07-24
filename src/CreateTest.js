@@ -34,6 +34,10 @@ const CreateTest = () => {
     setImages(prevImages => [...prevImages, { file: null, title: '' }]);
   };
 
+  const deleteImageField = (index) => {
+    setImages(prevImages => prevImages.filter((img, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -274,6 +278,7 @@ const CreateTest = () => {
                   onChange={(e) => handleImageTitleChange(e, index)}
                   required
                 />
+                <button type="delete" className="delete-button" onClick={() => deleteImageField(index)}>삭제</button>
               </div>
             ))}
             <button type="button" onClick={addImageField}>

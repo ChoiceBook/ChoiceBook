@@ -62,11 +62,12 @@ html, body {
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #929292;
     border-radius: 4px;
     font-family: 'Mapo';
     font-size: 1.7vh;
     color: #767778;
+    font-weight: bold;
   }
   
   .checkbox-group {
@@ -106,13 +107,25 @@ html, body {
     background-color: #767778;
     font-family: 'Mapo';
   }
+
+  button[type="delete"], .image-upload-group button {
+    background-color: #b6b6b6;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Mapo';
+    margin-bottom: 4vh;
+    margin-top: 8px;
+    font-size: 1.3vh;
+  }
   
   textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #929292;
     border-radius: 4px;
     font-family: 'Mapo';
     font-size: 1.7vh;
@@ -122,6 +135,6 @@ html, body {
   }
   
   textarea:focus {
-    border-color: #ccc; /* Ensure the border color stays the same */
+    border-color: #929292; /* Ensure the border color stays the same */
     box-shadow: none; /* Remove the default box shadow */
   }

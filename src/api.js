@@ -44,4 +44,14 @@ export const fetchItemDetails = async (itemId) => {
   }
 };
 
+export const fetchUsername = async (userId) => {
+  try {
+    const response = await api.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching item details:', error);
+    throw error; // Throw error to be handled by calling code
+  }
+};
+
 export default api;

@@ -280,22 +280,41 @@ html, body {
   transform: rotate(20deg); /* Rotate the pen image */
 }
 
-.profile-overlay {
-  position: absolute; /* Position it absolutely within the button */
-  top: 40%; /* Adjust position from the bottom */
-  right: 50%; /* Adjust position from the right */
-  width: 10vw; /* Adjust width of the profile image */
-  height: 10vh; /* Adjust height of the profile image */
-  display: flex;
-  justify-content: center; /* Center the image within the overlay */
-  align-items: center; /* Center the image within the overlay */
-  background: transparent; /* Optional: Background color with transparency */
-  border-radius: 50%;
+.postcard-container2 {
+  position: absolute;
+  top: 3%;
+  left: 1%;
+  transform: rotate(-10deg);
+  width: 100%;
+  height: auto;
+  max-width: 30vw; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  transition: opacity 0.5s ease; 
 }
 
-.profile-overlay img {
-  width: 100%; /* Ensure the image fits within the overlay */
-  height: 100%; /* Ensure the image fits within the overlay */
-  object-fit: cover; /* Maintain aspect ratio and cover the container */
-  border-radius: 50%;
+.postcard-image2 {
+  position: absolute; /* Fixed position to keep it at the top-left corner */
+  width: 100%; /* Adjust size as needed */
+  height: auto;
+}
+
+.postcard-container2.hidden {
+  opacity: 0;
+}
+
+.postcard-text-container {
+  position: absolute; /* Absolute position relative to the postcard-container2 */
+  top: 16vh; /* Position text container 10px from the bottom of the container */
+  right: -54%; /* Center horizontally */
+  transform: translateX(-50%); /* Center the text container horizontally */
+  text-align: center; /* Center the text within the container */
+  width: 80%; /* Adjust width as needed */
+}
+
+.postcard-text {
+  font-family: 'Mapo';
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin: 0; /* Remove default margin */
 }
