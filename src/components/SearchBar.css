@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Mapo';
+    src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+  }
+
 .input-wrapper {
     background-color: white;
     width: 30vw;
@@ -10,19 +15,25 @@
     margin-top: 2.5vh;
 }
 
+#search-icon {
+    color: black;
+    flex-shrink: 0;
+}
+
 input {
     background-color: transparent;
     border: none;
     height: 100%;
     font-size: 1.25rem;
     margin-left: 5px;
+    font-family: 'Mapo';
+    flex-grow: 1;
+}
+
+input::placeholder {
+    font-family: 'Mapo';
 }
 
 input:focus {
     outline: none;
 }
-
-#search-icon {
-    color: black
-}
-

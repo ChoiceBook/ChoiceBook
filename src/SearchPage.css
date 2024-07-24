@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Mapo';
+  src: url('./fonts/MapoFlowerIsland.ttf') format('truetype');
+}
+
 .search-bar-container {
   display: flex;
   flex-direction: column;
@@ -17,3 +22,10 @@
   overflow-y: auto;
 }
 
+.close-button {
+  width: 3vw;
+  margin-left: auto;
+  border: 0;
+  background-color: transparent;
+  font-family: 'Mapo';
+}

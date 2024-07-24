@@ -40,6 +40,10 @@ const CreateTest = () => {
     setImages(prevImages => prevImages.filter((img, i) => i !== index));
   };
 
+  const handleClose = () => {
+    navigate('/');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -166,6 +170,7 @@ const CreateTest = () => {
   return (
     <div className="create-test-container">
       <div className="background">
+        <button className="close-button" onClick={handleClose}>X</button>
         <h1>플롯 생성하기</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
