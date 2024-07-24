@@ -19,6 +19,10 @@ html, body {
     justify-content: center; /* Center items vertically */
 }
 
+.testbook-container p {
+    font-size: 1.5vw;
+}
+
 .battle-container {
     display: flex;
     justify-content: space-around; /* Center items horizontally */
@@ -28,7 +32,7 @@ html, body {
     gap: 13vw; /* Space between images */
 }
 
-.item-option {
+.test-option {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,11 +44,11 @@ html, body {
     transition: background-color 0.3s;
 }
 
-.item-option:hover {
+.test-option:hover {
     background-color: #ffffff;
 }
 
-.item-image {
+.test-image {
     width: 20vw; /* Adjust size as needed */
     height: auto;
     border-radius: 8px;
@@ -53,7 +57,7 @@ html, body {
     overflow: hidden;
 }
 
-.item-name {
+.test-name {
     margin-top: 10px;
     font-size: 1.5vw;
     text-align: center;

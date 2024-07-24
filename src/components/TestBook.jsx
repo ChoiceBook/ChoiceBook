@@ -284,15 +284,15 @@ const TestBook = ({ items, plotId }) => {
             {!showResults ? (
                 <div className="battle-container">
                     {leftItem && (
-                        <div className="item-option" onClick={() => handleChoice(-1)}>
-                            <img src={leftItem.imageUrl} alt={leftItem.name} className="item-image" />
-                            <p className="item-name">{leftItem.name}</p>
+                        <div className="test-option" onClick={() => handleChoice(-1)}>
+                            <img src={leftItem.imageUrl} alt={leftItem.name} className="test-image" />
+                            <p className="test-name">{leftItem.name}</p>
                         </div>
                     )}
                     {rightItem && (
-                        <div className="item-option" onClick={() => handleChoice(1)}>
-                            <img src={rightItem.imageUrl} alt={rightItem.name} className="item-image" />
-                            <p className="item-name">{rightItem.name}</p>
+                        <div className="test-option" onClick={() => handleChoice(1)}>
+                            <img src={rightItem.imageUrl} alt={rightItem.name} className="test-image" />
+                            <p className="test-name">{rightItem.name}</p>
                         </div>
                     )}
                 </div>
@@ -300,8 +300,8 @@ const TestBook = ({ items, plotId }) => {
                 <div className="result-container">
                     {topRankedItem && (
                         <div className="top-ranked-item">
-                            <img src={topRankedItem.imageUrl} alt={topRankedItem.name} className="item-image" />
-                            <p className="item-name">{topRankedItem.name}</p>
+                            <img src={topRankedItem.imageUrl} alt={topRankedItem.name} className="test-image" />
+                            <p className="test-name">{topRankedItem.name}</p>
                         </div>
                     )}
                     <div className="result-list">
