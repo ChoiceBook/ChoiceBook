@@ -54,4 +54,14 @@ export const fetchUsername = async (userId) => {
   }
 };
 
+export const fetchUserPlots = async (userId) => {
+  try {
+    const response = await api.get(`/users/${userId}/categories`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching item details:', error);
+    throw error; // Throw error to be handled by calling code
+  }
+};
+
 export default api;
