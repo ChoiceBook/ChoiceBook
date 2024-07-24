@@ -25,7 +25,7 @@ const PlotPage = () => {
   return (
     <div className="plot-container">
       <div className="background">
-        <TestBook items= { items }/>
+        <TestBook items={items} plotId={id} />
       </div>
     </div>
   );
