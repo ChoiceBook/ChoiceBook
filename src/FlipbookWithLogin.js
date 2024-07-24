@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
+import axios from 'axios';
 import './Flipbook.css';
 import './Login.css';
 import Login from './Login';
@@ -20,21 +21,23 @@ const FlipbookWithLogin = () => {
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
   const [pages, setPages] = useState([]);
+  const [postcardImage, setPostcardImage] = useState('');
 
   useEffect(() => {
     if (loading) return; // Wait until user data is loaded
-
+  
     const loggedIn = !!user;
-
+  
     setIsLoggedIn(loggedIn);
     if (loggedIn) {
       setIsLockHidden(true);
       fetchAndSetUsername(user.userId); // Fetch username when logged in
+      postCardImage(); // 이미지 로드 함수 호출
     }
-
+  
     const loadData = async () => {
       if (!user) return; // Wait for user data to be available
-
+  
       try {
         if (loggedIn) {
           const generatedPages = await generatePages(user.userId);
@@ -48,7 +51,7 @@ const FlipbookWithLogin = () => {
         console.error('Error loading data:', error);
       }
     };
-
+  
     loadData();
   }, [user, loading]);
 
@@ -70,6 +73,20 @@ const FlipbookWithLogin = () => {
 
   const handleLockClick = () => {
     setIsLoginVisible(!isLoginVisible);
+  };
+
+  const postCardImage = async () => {
+    try {
+      const response = await axios.get(`http://172.10.7.117/api/postcard-image/${user.userId}`); // 이미지 API 엔드포인트로 요청
+      if (response.data && response.data.imageUrl) {
+        setPostcardImage(response.data.imageUrl); // 이미지 URL을 상태에 저장
+        console.log(postcardImage)
+      } else {
+        console.error('Invalid image response:', response);
+      }
+    } catch (error) {
+      console.error('Error fetching postcard image:', error);
+    }
   };
 
   const handleLogout = () => {
@@ -111,12 +128,19 @@ const FlipbookWithLogin = () => {
     <div className="flipbook-wrapper">
       <div className={`postcard-container2 ${!isLoggedIn ? 'hidden' : ''}`}>
         <img
-          src="/postcard2.jpg" // Update this path to your postcard image
+          src="/postcard2.jpg" // 기본 포스트카드 이미지
           alt="Postcard"
           className="postcard-image2"
         />
+        {postcardImage && (
+          <img
+            src={postcardImage} // 서버에서 받아온 이미지
+            alt="Overlay Postcard"
+            className="overlay-image"
+          />
+        )}
         <div className="postcard-text-container">
-        <p className="postcard-text">{username ? `${username}` : 'Loading...'}</p>
+          <p className="postcard-text">{username ? `${username}` : 'Loading...'}</p>
         </div>
       </div>
       <div className="login-section">
@@ -128,7 +152,6 @@ const FlipbookWithLogin = () => {
           )
         )}
       </div>
-
       <div className={`flipbook-container ${!isLoggedIn ? 'locked' : ''}`}>
         <div className="flipbook-lock-container">
           {!isLockHidden && (
@@ -167,7 +190,6 @@ const FlipbookWithLogin = () => {
         </HTMLFlipBook>
         )}
       </div>
-
       <div className={`navigation-icons ${!isLoggedIn ? 'locked' : 'active'}`}>
         <button className="nav-icon top-right search" onClick={handleSearchClick}>
           <img src="/glass.png" alt="Search" />
@@ -176,7 +198,6 @@ const FlipbookWithLogin = () => {
           <img src="/pen3.png" alt="Pen" />
         </button>
       </div>
-
       {isLoggedIn && (
         <button className="logout-button fade-in" onClick={handleLogout}>
           Logout
