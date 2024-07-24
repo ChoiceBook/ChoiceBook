@@ -44,13 +44,16 @@ export const generatePages = async (userId) => {
 
     const plotDataPromises = plots.map(async (plot) => {
       const ranks = await fetchRanks(plot.plot_id, userId);
+      console.log(ranks);
 
       const itemsPromises = ranks.map(async (rank) => {
         const itemDetails = await fetchItemDetails(rank.item_id);
-        return { ...itemDetails[0], rank_value: rank.rank_value };
+        return { ...itemDetails[0], rank_value: rank.rank_value, increasement: rank.increasement }; // Include increasement here
       });
 
       const items = await Promise.all(itemsPromises);
+      console.log(items);
+
       return {
         title: plot.title,
         items: items.sort((a, b) => a.rank_value - b.rank_value),
@@ -68,9 +71,20 @@ export const generatePages = async (userId) => {
             <div>
               {data.items.map(item => (
                 <div key={item.item_id} className="item-row">
-                  <div className="item-info">
-                    <h2>{item.rank_value}.</h2>
-                    <p>{item.item_name}</p>
+                  <div className="item-info" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <h2>{item.rank_value}.</h2>
+                      <p style={{ marginLeft: '1vw' }}>{item.item_name}</p>
+                    </div>
+                    <p style={{ display: 'flex', alignItems: 'center', marginLeft: '12vw' }}>
+                      {item.increasement !== null
+                        ? item.increasement === 0
+                          ? '-'
+                          : item.increasement > 0
+                            ? <span style={{ color: 'red', marginLeft: '0.5vw' }}>&#9660; {item.increasement}</span> // Red downward triangle
+                            : <span style={{ color: 'blue', marginLeft: '0.5vw' }}>&#9650; {-item.increasement}</span> // Blue upward triangle
+                        : 'NEW'}
+                    </p>
                   </div>
                   <div className="item-image-container">
                     <img src={item.item_image_url} alt={item.item_name} className="item-image" />
@@ -82,6 +96,8 @@ export const generatePages = async (userId) => {
         />
       );
     });
+    
+    
   }
 
   // Add a blank page if the total number of pages is even

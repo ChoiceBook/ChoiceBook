@@ -108,6 +108,7 @@
 }
   
   .page-body {
+    width:100%;
     flex: 1;
     overflow-y: auto;
     margin-bottom: 3%;
@@ -117,6 +118,7 @@
   .item-row {
     display: flex;
     flex-direction: column; /* Stack children vertically */
+    align-items: center;
     margin-bottom: 10px; /* Space between rows */
   }
   

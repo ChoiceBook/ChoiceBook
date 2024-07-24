@@ -32,8 +32,23 @@ const TestBook = ({ items, plotId }) => {
         initList();
     }, [items, plotId]);
 
+
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
+
     const initList = () => {
-        const validItemIds = items.map(item => item.item_id).filter(id => id >= 0);
+      const shuffledItems = shuffleArray([...items]);
+  
+      const names = shuffledItems.map(item => item.item_name);
+      const urls = shuffledItems.map(item => item.item_image_url);
+      const ids = shuffledItems.map(item => item.item_id);
+
+      console.log("Initialized Image URLs:", urls); // Log to check initialization
 
         const names = items.map(item => item.item_name);
         const urls = items.map(item => item.item_image_url);
