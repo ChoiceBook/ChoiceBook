@@ -1,8 +1,7 @@
-/* HomeButton.css */
 .retry-button {
-    position: relative;
-    top: 78vh; /* Distance from the top edge */
-    left: 40vw; /* Distance from the left edge */
+    position: absolute;
+    top: 89.5vh; /* Distance from the top edge */
+    left: 88vw; /* Distance from the left edge */
     width: auto;
     font-size: 1.3vw; /* Adjusted font size for better visibility */
     color: black; /* Text color */
