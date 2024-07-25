@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useParams } from 'react-router-dom';
 import './PlotPage.css';
 import TestBook from './components/TestBook';
-
+import HomeButton from './HomeButton';
 
 const PlotPage = () => {
   const { id } = useParams();
@@ -44,6 +44,7 @@ const PlotPage = () => {
 
   return (
     <div className="plot-container">
+      <HomeButton />
       <div className="background">
         <button className="close-button" onClick={handleClose}>X</button>
         <h1>{plotTitle}</h1> {/* Display the plot title */}
