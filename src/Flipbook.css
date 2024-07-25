@@ -283,7 +283,7 @@ html, body {
 .postcard-container2 {
   position: absolute;
   top: 3%;
-  left: 1%;
+  left: -1%;
   transform: rotate(-10deg);
   width: 100%;
   height: auto;
@@ -343,6 +343,7 @@ html, body {
   cursor: pointer;
   pointer-events: auto;
   border: none;
+  background-color: white;
 }
 
 .ticket-drama {
@@ -406,4 +407,12 @@ html, body {
   left: 22%;
   transform: rotate(23deg);
   z-index: 10;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }

@@ -56,7 +56,7 @@ function Login({ setIsLoggedIn, setIsLoginVisible, onLoginSuccess, onRegisterCli
       {errorMessage && <div className="error-message">{errorMessage}</div>} {/* 에러 메시지 표시 */}
     </div>
     <div className="text-container-login">
-          <p>Welcome Back!</p>
+          <p>자신에 대해 더 깊이 <br />알 수 있는 시간이 되길 바라며...</p>
         </div>
     </div>
     </div>

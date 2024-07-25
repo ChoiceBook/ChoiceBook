@@ -9,12 +9,12 @@ import CoverPage from './CoverPage'; // Import the CoverPage component
 import { generatePages } from './generatePages';
 import { useAuth } from './AuthContext'; // Import useAuth to get user info
 import { fetchUsername } from './api'; // Import fetchUsername function
+import HomeButton from './HomeButton'; // Import the HomeButton component
 
 const FlipbookWithLogin = () => {
   const { user, loading } = useAuth(); // Get user and loading state from AuthContext
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginVisible, setIsLoginVisible] = useState(true);
-  const [isLockHidden, setIsLockHidden] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState(''); // State to store username
   const flipbookRef = useRef(null);
@@ -29,7 +29,6 @@ const FlipbookWithLogin = () => {
 
     setIsLoggedIn(loggedIn);
     if (loggedIn) {
-      setIsLockHidden(true);
       fetchAndSetUsername(user.userId); // Fetch username when logged in
     }
 
@@ -48,16 +47,22 @@ const FlipbookWithLogin = () => {
         // Create page indices for chapter navigation
         const chapterNames = ["드라마", "영화", "게임", "애니메이션", "음악", "음식", "스포츠", "기타", "내가 만든 플롯"];
         const indices = {};
+
+// Iterate through pages to assign indices
         generatedPages.forEach((page, index) => {
           if (page.props.title && chapterNames.includes(page.props.title)) {
-            indices[page.props.title] = index;
-            console.log('Chapter title:', page.props.title); // Debugging log
+    // Only add the index if it doesn't already exist
+            if (!(page.props.title in indices)) {
+              indices[page.props.title] = index;
+              console.log('Chapter title:', page.props.title); // Debugging log
+            }
           }
           console.log('Title:', page.props.title);
         });
 
         console.log('Indices:', indices); // Debugging log
         setPageIndices(indices);
+
       }
     } catch (error) {
       console.error('Error loading data:', error);
@@ -83,16 +88,11 @@ const FlipbookWithLogin = () => {
     }
   };
 
-  const handleLockClick = () => {
-    setIsLoginVisible(!isLoginVisible);
-  };
-
   const handleLogout = () => {
     if (flipbookRef.current) {
       flipbookRef.current.pageFlip().turnToPage(0);
     }
     setIsLoggedIn(false);
-    setIsLockHidden(false);
     localStorage.setItem('isLoggedIn', 'false');
   };
 
@@ -100,7 +100,6 @@ const FlipbookWithLogin = () => {
     setIsLoggedIn(true);
     setIsLoginVisible(false);
     localStorage.setItem('isLoggedIn', 'true');
-    setIsLockHidden(true);
   };
 
   const handleRegisterClick = () => {
@@ -130,7 +129,8 @@ const FlipbookWithLogin = () => {
 
   return (
     <div className="flipbook-wrapper">
-      <div className={`postcard-container2 ${!isLoggedIn ? 'hidden' : ''}`}>
+      <HomeButton />
+      <div className={`postcard-container2 ${!isLoggedIn ? 'hidden' : 'visible'}`}>
         <img
           src="/postcard2.jpg" // Update this path to your postcard image
           alt="Postcard"
@@ -140,24 +140,20 @@ const FlipbookWithLogin = () => {
         <p className="postcard-text">{username ? `${username}` : 'Loading...'}</p>
         </div>
       </div>
-      <div className="login-section">
-        {!isLoggedIn && isLoginVisible && (
-          isRegistering ? (
-            <Register onBackToLoginClick={handleBackToLoginClick} />
-          ) : (
-            <Login setIsLoggedIn={setIsLoggedIn} setIsLoginVisible={setIsLoginVisible} onLoginSuccess={handleLoginSuccess} onRegisterClick={handleRegisterClick} />
-          )
+      <div className={`login-section ${isLoggedIn ? 'hidden' : 'visible'}`}>
+        {isRegistering ? (
+          <Register onBackToLoginClick={handleBackToLoginClick} />
+        ) : (
+          <Login 
+            setIsLoggedIn={setIsLoggedIn} 
+            setIsLoginVisible={setIsLoginVisible} 
+            onLoginSuccess={handleLoginSuccess} 
+            onRegisterClick={handleRegisterClick} 
+          />
         )}
       </div>
 
       <div className={`flipbook-container ${!isLoggedIn ? 'locked' : ''}`}>
-        <div className="flipbook-lock-container">
-          {!isLockHidden && (
-            <div className={`lock-icon ${isLoggedIn ? 'unlocked fade-out' : ''}`} onClick={handleLockClick}>
-              {isLoggedIn ? '🔓' : '🔒'}
-            </div>
-          )}
-        </div>
         {!isLoggedIn ? (
           <CoverPage /> // Display CoverPage when user is not logged in
         ) : (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './CreateTest.css'; // Import the CSS file
 import { useAuth } from './AuthContext';
+import HomeButton from './HomeButton';
 
 const CreateTest = () => {
   const [title, setTitle] = useState('');
@@ -165,6 +166,7 @@ const CreateTest = () => {
 
   return (
     <div className="create-test-container">
+      <HomeButton />
       <div className="background">
         <h1>플롯 생성하기</h1>
         <form onSubmit={handleSubmit}>
