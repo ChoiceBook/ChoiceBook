@@ -98,7 +98,7 @@
 .text-container-login {
   position: absolute;
   top: -20%;
-  right: -4%;
+  right: 2%;
   width: 40%;
   margin-left: 5%;
   background-color: transparent; /* Slightly transparent background */
