@@ -54,7 +54,7 @@ function Register({ onBackToLoginClick }) {
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
         <div className="text-container">
-          <p>당신을 '제목'으로 초대합니다.</p>
+          <p>당신을 Plot Diary로 초대합니다.</p>
         </div>
       </div>
     </div>

@@ -90,6 +90,7 @@
     box-sizing: border-box; /* Ensure padding is included in height */
     border-radius: 10px;
     font-family: 'Mapo';
+    scrollbar-width: none;
   }
   
   .page-content h1 {
@@ -119,6 +120,7 @@
     width:100%;
     flex: 1;
     overflow-y: auto;
+    scrollbar-width: none;
     margin-bottom: 3%;
     font-family: 'Mapo';
   }

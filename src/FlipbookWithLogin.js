@@ -104,6 +104,7 @@ const FlipbookWithLogin = () => {
         console.error('Invalid image response:', response);
       }
     } catch (error) {
+      setPostcardImage('');
       console.error('Error fetching postcard image:', error);
     }
   };
