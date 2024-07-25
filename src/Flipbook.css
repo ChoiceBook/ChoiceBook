@@ -131,6 +131,10 @@ html, body {
   display: block; /* Remove any extra space below image */
 }
 
+.logout-image-button img:hover {
+  transform: scale(1.05);
+}
+
 
 .logout-button:hover {
   background-color: rgb(238, 198, 0); /* Darker red on hover */
@@ -273,6 +277,10 @@ html, body {
   cursor: pointer;
 }
 
+.nav-icon.pen img:hover {
+  transform: scale(1.05) rotate(-190deg);
+}
+
 .nav-icon.search img {
   width: -47vw;
   height: 47vh;
@@ -280,6 +288,10 @@ html, body {
   pointer-events: auto;
   border: none;
   cursor: pointer;
+}
+
+.nav-icon.search img:hover {
+  transform: scale(1.05) rotate(56deg);
 }
 
 .postcard-container2 {
@@ -338,6 +350,10 @@ html, body {
   border: none;
   background: transparent;
   pointer-events: none;
+}
+
+.ticket-button:hover {
+  transform: scale(1.2);
 }
 
 .ticket-button img {

@@ -8,7 +8,7 @@ const CoverPage = ({ isLoggedIn }) => {
     
   return (
     <div className={coverPageClass}>
-      <h1>Memorial<br />Diary</h1>
+      <h1> Plot Diary</h1>
     </div>
   );
 };
