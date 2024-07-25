@@ -1,9 +1,11 @@
 import React from 'react';
 import './TextPage.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const TextPage = React.forwardRef((props, ref) => {
   const { isCoverPage, isFirstPage, isLastPage, title, content, chapterPage, backgroundColor, plotId } = props;
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
   // Conditional class names based on props
@@ -15,7 +17,7 @@ const TextPage = React.forwardRef((props, ref) => {
 
   const handleTitleClick = () => {
     if (chapterPage) return;
-    navigate(`/plots/${plotId}`); // 원하는 경로로 변경
+    navigate(`/users/${user.userId}/plots/${plotId}`); // 원하는 경로로 변경
   };
 
   return (
