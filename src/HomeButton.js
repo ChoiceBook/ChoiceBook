@@ -12,7 +12,7 @@ const HomeButton = () => {
 
   return (
     <button className="home-button" onClick={handleClick}>
-      Diary
+      Plot Diary
     </button>
   );
 };

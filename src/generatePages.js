@@ -24,7 +24,7 @@ export const generatePages = async (userId, navigate) => {
   ];
 
   generatedPages.push(
-    <TextPage key="front-cover" isCoverPage={true} isFirstPage={true} title="Memorial<br />Diary" backgroundColor="#A80839"/>
+    <TextPage key="front-cover" isCoverPage={true} isFirstPage={true} title="Plot Diary" backgroundColor="#A80839"/>
   );
 
   // Add a blank page after the front cover
@@ -78,27 +78,17 @@ export const generatePages = async (userId, navigate) => {
         <div style={{ paddingLeft: '1.5vw', paddingRight: '1.5vw', paddingTop: '1vw', paddingBottom: '1vw', display: 'flex', flexDirection: 'column' }}>
           {userPlots.map((plot) => (
             <div key={plot.plot_id} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.7em' }}>
-              <p style={{ 
+              <p 
+                onClick={() => handleDeletePlot(userId, plot.plot_id, navigate)}
+                style={{ 
                 margin: 0, 
+                cursor: 'pointer',
                 fontSize: '1.3em',
                 flex: '100%', // Allows the title to take up available space
                 minWidth: '85%', // Ensures that title column does not shrink smaller than its content
               }}>
                 {plot.title}
               </p>
-              <button
-                onClick={() => handleDeletePlot(userId, plot.plot_id, navigate)}
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                  color: '#ccc',
-                  fontSize: '1.3em',
-                  marginLeft: '1em', // Pushes the button to the right end
-                }}
-              >
-                <FaTrash />
-              </button>
             </div>
           ))}
         </div>

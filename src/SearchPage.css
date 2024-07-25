@@ -45,6 +45,6 @@
 }
 
 .close-button:hover {
-  color: #rgb(157, 157, 157); /* Change text color on hover */
+  color: rgb(157, 157, 157); /* Change text color on hover */
   text-shadow: 0 0 8px rgb(157, 157, 157, 0.8), 0 0 15px rgb(157, 157, 157, 0.8); /* Glowing effect */
 }

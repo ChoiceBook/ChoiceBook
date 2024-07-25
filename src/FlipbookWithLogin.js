@@ -94,11 +94,13 @@ const FlipbookWithLogin = () => {
 
   const postCardImage = async () => {
     try {
+      console.log("postcard: ", `http://172.10.7.117/api/postcard-image/${user.userId}`)
       const response = await axios.get(`http://172.10.7.117/api/postcard-image/${user.userId}`); // 이미지 API 엔드포인트로 요청
       if (response.data && response.data.imageUrl) {
         setPostcardImage(response.data.imageUrl); // 이미지 URL을 상태에 저장
-        console.log(postcardImage)
+        console.log("postcard: ", response)
       } else {
+        setPostcardImage('');
         console.error('Invalid image response:', response);
       }
     } catch (error) {
