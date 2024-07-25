@@ -217,9 +217,10 @@ const FlipbookWithLogin = () => {
       </div>
       {isLoggedIn && (
         <>
-          <button className="logout-button fade-in" onClick={handleLogout}>
-            Logout
-          </button>
+          <button className="logout-image-button" onClick={handleLogout}>
+  <img src="/x.png" alt="Logout" />
+</button>
+
           <div className="tickets-container">
           <button className="ticket-button ticket-drama" onClick={() => handleTicketClick('드라마')}>
             <img src="/drama.png" alt="드라마" />

@@ -95,7 +95,15 @@
   .page-content h1 {
     margin-bottom: 5%;
     font-family: 'Mapo';
+    pointer-events: auto;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition */
   }
+
+  .page-content h1:hover {
+    color: #000000; /* Change text color on hover */
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.8); /* Glowing effect */
+}
 
   .page-content h2 {
     font-size: 1.2rem; /* Adjust font size for h2 elements */
@@ -119,7 +127,7 @@
     display: flex;
     flex-direction: column; /* Stack children vertically */
     align-items: center;
-    margin-bottom: 10px; /* Space between rows */
+    margin-bottom: 2vh; /* Space between rows */
   }
   
   .item-info {
@@ -159,8 +167,7 @@
     align-items: center;
     justify-content: center;
     font-family: 'Mapo';
-    font-size: 2rem; /* Adjust font size as needed */
-    font-size: 2rem; /* Adjust font size as needed */
+    font-size: 1.5vw; /* Adjust font size as needed */
     border-radius: 10px;
   }
   
