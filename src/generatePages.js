@@ -5,7 +5,11 @@ import TextPage from './TextPage';
 import { generatePlotPages } from './generatePlotPages';
 import { FaTrash } from 'react-icons/fa';
 
-export const generatePages = async (userId) => {
+const handleDeletePlot = async (userId, plotId, navigate) => {
+  navigate(`/users/${userId}/plots/${plotId}/delete`);
+};
+
+export const generatePages = async (userId, navigate) => {
   const generatedPages = [];
 
   const categories = [
@@ -83,7 +87,7 @@ export const generatePages = async (userId) => {
                 {plot.title}
               </p>
               <button
-                onClick={() => handleDeletePlot(plot.plot_id)}
+                onClick={() => handleDeletePlot(userId, plot.plot_id, navigate)}
                 style={{
                   border: 'none',
                   background: 'transparent',
@@ -124,23 +128,4 @@ export const generatePages = async (userId) => {
   );
 
   return generatedPages;
-};
-
-// Function to handle plot deletion
-const handleDeletePlot = async (plotId) => {
-  try {
-    const response = await fetch(`http://172.10.7.117/api/plots/${plotId}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete plot');
-    }
-
-    alert('Plot deleted successfully');
-    // Refresh the page or handle post-deletion actions
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Failed to delete plot');
-  }
 };

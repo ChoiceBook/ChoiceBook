@@ -40,7 +40,7 @@ const FlipbookWithLogin = () => {
   
       try {
         if (loggedIn) {
-          const generatedPages = await generatePages(user.userId);
+          const generatedPages = await generatePages(user.userId, navigate);
           setPages(generatedPages.map((page, index) => (
             <div key={index}>
               {page}
