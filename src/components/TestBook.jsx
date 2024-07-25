@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TestBook.css';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const TestBook = ({ items, plotId }) => {
+    const navigate = useNavigate();
     const { user, loading } = useAuth();
     const [namMember, setNamMember] = useState([]);
     const [lstMember, setLstMember] = useState([]);
@@ -29,8 +31,13 @@ const TestBook = ({ items, plotId }) => {
     const [showResults, setShowResults] = useState(false);
 
     useEffect(() => {
-        initList();
-    }, [items, plotId]);
+        console.log(user)
+        if (!loading && (!user || !user.userId)) {
+            navigate('/');
+        } else {
+            initList();
+        }
+    }, [items, plotId, navigate, user, loading]);
 
 
     const shuffleArray = (array) => {
@@ -179,27 +186,12 @@ const TestBook = ({ items, plotId }) => {
     };
 
     const showResult = () => {
-        let ranking = 1;
-        let sameRank = 1;
-    
-        // Create a list of items with ranking
-        const rankingList = namMember.map((name, index) => {
-            const currentItem = lstMember[0][index];
-            let itemRank = ranking;
-            if (index > 0 && equal[lstMember[0][index - 1]] === lstMember[0][index]) {
-                itemRank = ranking - sameRank + 1;
-                sameRank++;
-            } else {
-                ranking += sameRank;
-                sameRank = 1;
-            }
-    
-            return (
-                <li key={index}>
-                    {name}
-                </li>
+        const rankingList = [];
+        for (let i = 0; i < namMember.length; i++) {
+            rankingList.push(
+                <li key={i}>{namMember[lstMember[0][i]]}</li>
             );
-        });
+        }
     
         // Set the result field as a styled container with the ranking list
         setResultField(
@@ -222,7 +214,7 @@ const TestBook = ({ items, plotId }) => {
         // Show the results
         setShowResults(true);
         saveResultsToDB();
-    };    
+    };
 
     const saveResultsToDB = async () => {
         for (let i = 0; i < namMember.length; i++) {

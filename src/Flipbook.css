@@ -290,10 +290,11 @@ html, body {
   max-width: 30vw; /* Adjust the width as needed */
   margin: 0 auto; /* Center the container horizontally */
   transition: opacity 0.5s ease; 
+  display: inline-block;
 }
 
 .postcard-image2 {
-  position: absolute; /* Fixed position to keep it at the top-left corner */
+  position: relative; /* Fixed position to keep it at the top-left corner */
   width: 100%; /* Adjust size as needed */
   height: auto;
 }
@@ -415,4 +416,61 @@ html, body {
 
 .hidden {
   display: none;
+}
+
+.overlay-image {
+  position: absolute;
+  top: 32%; /* 필요에 따라 위치 조정 */
+  left: 10%; /* 필요에 따라 위치 조정 */
+  width: 30%; /* 기본 이미지의 30% 크기 */
+  height: 55%; /* 특정 높이 값 */
+  object-fit: cover; /* 이미지를 크롭하여 맞추기 */
+  z-index: 1; /* 기본 이미지 위에 오도록 설정 */
+  border-radius: 8px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.item-rank-name {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 1vw; /* 왼쪽 여백 추가 */
+}
+
+.item-rank {
+  margin-right: 0.5vw; /* 오른쪽 여백 축소 */
+}
+
+.item-name {
+  flex-grow: 1;
+}
+
+.item-increasement {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 1vw; /* 오른쪽 여백 추가 */
+}
+
+.item-image-container {
+  margin-left: 1vw;
+}
+
+.item-image {
+  width: 100px;
+  height: auto;
 }

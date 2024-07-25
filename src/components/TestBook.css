@@ -53,6 +53,7 @@ html, body {
     height: auto;
     border-radius: 8px;
     box-shadow: black;
+    object-fit: cover;
     max-height: 50vh;
     overflow: hidden;
 }
