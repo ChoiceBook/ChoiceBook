@@ -474,3 +474,12 @@ html, body {
   width: 100px;
   height: auto;
 }
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+

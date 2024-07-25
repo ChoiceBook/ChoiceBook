@@ -91,6 +91,7 @@ const FlipbookWithLogin = () => {
     }
   };
 
+
   const postCardImage = async () => {
     try {
       const response = await axios.get(`http://172.10.7.117/api/postcard-image/${user.userId}`); // 이미지 API 엔드포인트로 요청
