@@ -20,12 +20,31 @@
   align-items: center;
   border-radius: 10px; /* 둥근 모서리 */
   overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .close-button {
-  width: 3vw;
-  margin-left: auto;
-  border: 0;
-  background-color: transparent;
-  font-family: 'Mapo';
+  position: absolute;
+  font-family: Mapo;
+  top: 6vh; /* Distance from the top edge */
+  left: 93vw; /* Distance from the left edge */
+  width: auto;
+  font-size: 1.3vw; /* Adjusted font size for better visibility */
+  color: rgb(157, 157, 157); /* Text color */
+  background: none; /* No background */
+  border: none; /* No border */
+  border-color: transparent;
+  padding: 0; /* No padding */
+  cursor: pointer; /* Cursor to indicate it's clickable */
+  z-index: 10; /* Ensure it's on top of other elements */
+  text-align: center; /* Center align text */
+  line-height: 30px; /* Center text vertically */
+  border-radius: 5px; /* Optional rounded corners */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: color 0.3s, text-shadow 0.3s; /* Smooth transition */
+}
+
+.close-button:hover {
+  color: #rgb(157, 157, 157); /* Change text color on hover */
+  text-shadow: 0 0 8px rgb(157, 157, 157, 0.8), 0 0 15px rgb(157, 157, 157, 0.8); /* Glowing effect */
 }
