@@ -410,6 +410,14 @@ html, body {
   z-index: 10;
 }
 
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
 .overlay-image {
   position: absolute;
   top: 32%; /* 필요에 따라 위치 조정 */
