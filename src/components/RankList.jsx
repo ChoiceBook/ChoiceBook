@@ -1,21 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import './RankList.css'; // Assuming you have a CSS file for styling
+import './RankList.css'; // 스타일링을 위한 CSS 파일
 
 const RankList = ({ ranks }) => {
   const [rankGroups, setRankGroups] = useState([]);
 
   useEffect(() => {
-    const chunkAndSortRanks = (ranks, chunkSize) => {
+    const chunkAndSortRanks = (ranks) => {
       const chunks = [];
-      for (let i = 0; i < ranks.length; i += chunkSize) {
-        const chunk = ranks.slice(i, i + chunkSize);
+      const seenItems = new Set();
+      let chunk = [];
+
+      for (let i = 0; i < ranks.length; i++) {
+        const itemId = ranks[i].item_id;
+        
+        if (seenItems.has(itemId)) {
+          chunk.sort((a, b) => a.rank_value - b.rank_value);
+          chunks.push(chunk);
+          chunk = [];
+          seenItems.clear();
+        }
+
+        seenItems.add(itemId);
+        chunk.push(ranks[i]);
+      }
+
+      if (chunk.length > 0) {
         chunk.sort((a, b) => a.rank_value - b.rank_value);
         chunks.push(chunk);
       }
+
       return chunks;
     };
 
-    const sortedChunks = chunkAndSortRanks(ranks, 5);
+    const sortedChunks = chunkAndSortRanks(ranks);
     setRankGroups(sortedChunks);
   }, [ranks]);
 
